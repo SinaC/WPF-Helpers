@@ -1,0 +1,46 @@
+﻿<Window x:Class="DragAndDrop.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:ViewModels="clr-namespace:DragAndDrop.ViewModels" 
+        xmlns:Views="clr-namespace:DragAndDrop.Views" xmlns:System="clr-namespace:System;assembly=mscorlib"
+        mc:Ignorable="d" 
+        Title="MainWindow" Height="350" Width="525"
+        d:DataContext="{d:DesignInstance ViewModels:MainViewModel, IsDesignTimeCreatable=True}"
+        >
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        
+        <ItemsControl
+            Background="Bisque"
+            MinHeight="20"
+            Grid.Column="0"
+            DataContext="{Binding FromViewModel}"
+            ItemsSource="{Binding Items}"
+            Views:DragDropHandler.DragDrop="{Views:DragDropOptions IsDragSource=True, IsDropTarget=False, DoubleClickable=False, ItemType={x:Type System:String}}">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding}"/>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+
+        <ItemsControl
+            Background="AliceBlue"
+            MinHeight="20"
+            Grid.Column="1"
+            DataContext="{Binding ToViewModel}"
+            ItemsSource="{Binding Items}"
+            Views:DragDropHandler.DragDrop="{Views:DragDropOptions IsDragSource=False, IsDropTarget=True, DoubleClickable=False, ItemType={x:Type System:String}}">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding}"/>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+    </Grid>
+</Window>
