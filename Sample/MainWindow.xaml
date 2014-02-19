@@ -3,6 +3,11 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:Views="clr-namespace:Sample.Views"
         Title="MainWindow" Height="350" Width="525">
     <Grid>
-        <Views:MediatorView/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Views:MediatorView Grid.Row="0"/>
+        <Views:CustomGridView Grid.Row="1"/>
     </Grid>
 </Window>

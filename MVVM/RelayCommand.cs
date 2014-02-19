@@ -37,7 +37,7 @@ namespace MVVM
 
         public void Execute(object parameter)
         {
-            var val = parameter;
+            object val = parameter;
 
             if (parameter != null && parameter.GetType() != typeof(T) && parameter is IConvertible)
                 val = Convert.ChangeType(parameter, typeof(T), null);

@@ -67,20 +67,20 @@ namespace MVVM
 
         static void EventChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
         {
-            var ele = sender as UIElement;
+            UIElement ele = sender as UIElement;
             if (ele != null)
                 ele.AddHandler((RoutedEvent)e.NewValue, new RoutedEventHandler(DoCommand));
         }
 
         static void DoCommand(object sender, RoutedEventArgs e)
         {
-            var ele = sender as FrameworkElement;
+            FrameworkElement ele = sender as FrameworkElement;
             if (ele != null)
             {
-                var command = (ICommand)ele.GetValue(CommandProperty);
+                ICommand command = (ICommand)ele.GetValue(CommandProperty);
                 if (command != null)
                 {
-                    var parameter = ele.GetValue(CommandParameterProperty);
+                    object parameter = ele.GetValue(CommandParameterProperty);
                     parameter = parameter ?? e;
                     command.Execute(parameter);
                 }

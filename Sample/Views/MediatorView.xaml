@@ -43,5 +43,11 @@
                    HorizontalAlignment="Center" VerticalAlignment="Center" Cursor="Hand" Background="AliceBlue"
                    helper:EventToCommand.Event="UIElement.MouseLeftButtonDown"
                    helper:EventToCommand.Command="{Binding Command2}" />
+        <!--<Button Grid.Row="2" Grid.Column="1" FontSize="16" FontWeight="Bold" Width="150"
+                Command="{Binding Command1}"
+                CommandParameter="{Binding Text, ElementName=textboxB}">
+            <TextBlock TextWrapping="Wrap" Width="150" Text="Click me, EventToCommand, pass args"/>
+        </Button>-->
+
     </Grid>
 </UserControl>

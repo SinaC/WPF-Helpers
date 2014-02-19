@@ -17,12 +17,16 @@ namespace MVVM
             obj.SetValue(IsFocusedProperty, value);
         }
 
-        public static readonly DependencyProperty IsFocusedProperty = DependencyProperty.RegisterAttached("IsFocused", typeof(bool), typeof(AttachedFocus), new PropertyMetadata(false, null, OnIsFocusedPropertyChanged));
+        public static readonly DependencyProperty IsFocusedProperty = DependencyProperty.RegisterAttached(
+            "IsFocused", 
+            typeof(bool), 
+            typeof(AttachedFocus), 
+            new PropertyMetadata(false, null, OnIsFocusedPropertyChanged));
 
         private static object OnIsFocusedPropertyChanged(DependencyObject d, object value)
         {
-            var uie = (UIElement)d;
-            if ((bool)value)
+            UIElement uie = d as UIElement;
+            if (uie != null && (bool)value)
                 uie.Focus(); // Don't care about false values.
             return value;
         }

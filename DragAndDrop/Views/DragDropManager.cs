@@ -338,7 +338,11 @@ namespace DragAndDrop.Views
     public class DragDropHandler
     {
         // DragDrop
-        public static readonly DependencyProperty DragDropProperty = DependencyProperty.RegisterAttached("DragDrop", typeof(DragDropOptionsData), typeof(DragDropHandler), new UIPropertyMetadata(null, DragDropChanged));
+        public static readonly DependencyProperty DragDropProperty = DependencyProperty.RegisterAttached(
+            "DragDrop", 
+            typeof(DragDropOptionsData), 
+            typeof(DragDropHandler), 
+            new UIPropertyMetadata(null, DragDropChanged));
 
         public static DragDropOptionsData GetDragDrop(DependencyObject obj)
         {
