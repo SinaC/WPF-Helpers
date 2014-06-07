@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DragAndDrop", "DragAndDrop\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CustomControls", "CustomControls\CustomControls.csproj", "{AEF4551B-D9C8-4C34-B440-702317785FEB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DynamicDataGrid", "DynamicDataGrid\DynamicDataGrid.csproj", "{99234ADC-1240-45B8-8BD0-AC6E979A08CA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -31,6 +33,10 @@ Global
 		{AEF4551B-D9C8-4C34-B440-702317785FEB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AEF4551B-D9C8-4C34-B440-702317785FEB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AEF4551B-D9C8-4C34-B440-702317785FEB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{99234ADC-1240-45B8-8BD0-AC6E979A08CA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{99234ADC-1240-45B8-8BD0-AC6E979A08CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{99234ADC-1240-45B8-8BD0-AC6E979A08CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{99234ADC-1240-45B8-8BD0-AC6E979A08CA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
