@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Dynamic;
 using System.Linq;
 using System.Windows.Data;
@@ -40,13 +41,30 @@ namespace DynamicDataGrid.DynamicGrid
 
         public override bool TrySetMember(SetMemberBinder binder, object value)
         {
-            // !!!! no type check, if column is supposed to be an int and value is a string, _dynamicProperties will be 'transformed' to string
             // TODO: type checking
+            // !!!!! if column is a int, editable column will be textbox -> value is of type string
             if (_dynamicProperties.ContainsKey(binder.Name))
             {
                 if (_dynamicProperties[binder.Name].GetType() != value.GetType())
-                    return false;
-                _dynamicProperties[binder.Name] = value;
+                {
+                    TypeConverter converter = TypeDescriptor.GetConverter(_dynamicProperties[binder.Name].GetType());
+                    try
+                    {
+                        object converted = converter.ConvertFrom(value);
+                        _dynamicProperties[binder.Name] = converted;
+                    }
+                        // TODO: should notify row error provider
+                    catch(FormatException ex)
+                    {
+                        return false;
+                    }
+                    catch(Exception ex)
+                    {
+                        return false;
+                    }
+                }
+                else
+                    _dynamicProperties[binder.Name] = value;
                 return true;
             }
 

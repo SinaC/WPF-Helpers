@@ -1,5 +1,7 @@
 ﻿//http://stackoverflow.com/questions/882214/data-binding-dynamic-data
 //http://www.reimers.dk/jacob-reimers-blog/auto-generating-datagrid-columns-from-dynamicobjects
+//http://jopinblog.wordpress.com/2007/04/30/implementing-itypedlist-for-virtual-properties/
+//http://jopinblog.wordpress.com/2007/05/12/dynamic-propertydescriptors-with-anonymous-methods/
 using System;
 using System.Collections.Generic;
 using System.Windows;
@@ -22,7 +24,7 @@ namespace DynamicDataGrid
                 {
                     Name = "Foo",
                     Type = typeof(string),
-                    IsReadOnly = true,
+                    IsReadOnly = false,
                 },
                 new DynamicColumn
                 {
@@ -77,7 +79,7 @@ namespace DynamicDataGrid
 
     public class CustomRow : DynamicRow
     {
-        public int Status { get; set; } // cannot be displayed
+        public int Status { get; set; } // will displayed only if a column is specified in DataGrid
 
         public CustomRow(params Tuple<string, object>[] propertyNames)
             : base(propertyNames)
