@@ -7,54 +7,6 @@ using System.Linq;
 
 namespace DynamicDataGrid.DynamicGrid
 {
-    //public class DynamicGrid<TRow, TColumn> : ObservableCollection<TRow>, ITypedList
-    //    where TRow : DynamicObject
-    //    where TColumn : IDynamicColumn
-    //{
-    //    public List<TColumn> Columns { get; private set; }
-
-    //    public DynamicGrid(IEnumerable<TColumn> columns)
-    //    {
-    //        Columns = columns.ToList();
-    //    }
-
-    //    public DynamicGrid(params TColumn[] columns)
-    //    {
-    //        Columns = columns.ToList();
-    //    }
-        
-    //    public DynamicGrid(IEnumerable<TRow> rows, IEnumerable<TColumn> columns)
-    //    {
-    //        foreach(TRow row in rows)
-    //            Add(row);
-    //        Columns = columns.ToList();
-    //    }
-
-    //    public DynamicGrid(IEnumerable<TRow> rows, params TColumn[] columns)
-    //    {
-    //        foreach (TRow row in rows)
-    //            Add(row);
-    //        Columns = columns.ToList();
-    //    }
-
-    //    public string GetListName(PropertyDescriptor[] listAccessors)
-    //    {
-    //        return null;
-    //    }
-
-    //    public PropertyDescriptorCollection GetItemProperties(PropertyDescriptor[] listAccessors)
-    //    {
-    //        PropertyDescriptor[] dynamicDescriptors;
-
-    //        if (Columns.Any())
-    //            dynamicDescriptors = Columns.Select(p => new DynamicPropertyDescriptor(p.Name, p.Type, p.IsReadOnly)).Cast<PropertyDescriptor>().ToArray();
-    //        else
-    //            dynamicDescriptors = new PropertyDescriptor[0];
-
-    //        return new PropertyDescriptorCollection(dynamicDescriptors);
-    //    }
-    //}
-
     public class DynamicGrid<TRow, TColumn> : IList, ITypedList
         where TRow : DynamicObject
         where TColumn : IDynamicColumn
@@ -68,6 +20,8 @@ namespace DynamicDataGrid.DynamicGrid
             Columns = columns.ToList();
         }
 
+        #region ITypedList
+
         public string GetListName(PropertyDescriptor[] listAccessors)
         {
             return null;
@@ -78,14 +32,19 @@ namespace DynamicDataGrid.DynamicGrid
             PropertyDescriptor[] dynamicDescriptors;
 
             if (Columns.Any())
-                dynamicDescriptors = Columns.Select(p => new DynamicPropertyDescriptor(p.Name, p.Type, p.IsReadOnly)).Cast<PropertyDescriptor>().ToArray();
+                dynamicDescriptors = Columns.Select(column => new DynamicPropertyDescriptor(column.Name, column.Type, column.IsReadOnly)).Cast<PropertyDescriptor>().ToArray();
             else
                 dynamicDescriptors = new PropertyDescriptor[0];
 
             return new PropertyDescriptorCollection(dynamicDescriptors);
         }
 
-        private IList UnspecializedRows {get { return (IList) Rows; }}
+        #endregion
+
+        private IList UnspecializedRows
+        {
+            get { return (IList) Rows; }
+        }
 
         #region IList
 
@@ -99,9 +58,21 @@ namespace DynamicDataGrid.DynamicGrid
             UnspecializedRows.CopyTo(array, index);
         }
 
-        public int Count { get { return UnspecializedRows.Count; } }
-        public object SyncRoot { get { return UnspecializedRows.SyncRoot; } }
-        public bool IsSynchronized { get { return UnspecializedRows.IsSynchronized; } }
+        public int Count
+        {
+            get { return UnspecializedRows.Count; }
+        }
+
+        public object SyncRoot
+        {
+            get { return UnspecializedRows.SyncRoot; }
+        }
+
+        public bool IsSynchronized
+        {
+            get { return UnspecializedRows.IsSynchronized; }
+        }
+
         public int Add(object value)
         {
             return UnspecializedRows.Add(value);
@@ -143,9 +114,64 @@ namespace DynamicDataGrid.DynamicGrid
             set { UnspecializedRows[index] = value; }
         }
 
-        public bool IsReadOnly { get { return UnspecializedRows.IsReadOnly; } }
-        public bool IsFixedSize { get { return UnspecializedRows.IsFixedSize; } }
+        public bool IsReadOnly
+        {
+            get { return UnspecializedRows.IsReadOnly; }
+        }
+
+        public bool IsFixedSize
+        {
+            get { return UnspecializedRows.IsFixedSize; }
+        }
 
         #endregion
     }
+
+    //public class DynamicGrid<TRow, TColumn> : ObservableCollection<TRow>, ITypedList
+    //    where TRow : DynamicObject
+    //    where TColumn : IDynamicColumn
+    //{
+    //    public List<TColumn> Columns { get; private set; }
+
+    //    public DynamicGrid(IEnumerable<TColumn> columns)
+    //    {
+    //        Columns = columns.ToList();
+    //    }
+
+    //    public DynamicGrid(params TColumn[] columns)
+    //    {
+    //        Columns = columns.ToList();
+    //    }
+
+    //    public DynamicGrid(IEnumerable<TRow> rows, IEnumerable<TColumn> columns)
+    //    {
+    //        foreach(TRow row in rows)
+    //            Add(row);
+    //        Columns = columns.ToList();
+    //    }
+
+    //    public DynamicGrid(IEnumerable<TRow> rows, params TColumn[] columns)
+    //    {
+    //        foreach (TRow row in rows)
+    //            Add(row);
+    //        Columns = columns.ToList();
+    //    }
+
+    //    public string GetListName(PropertyDescriptor[] listAccessors)
+    //    {
+    //        return null;
+    //    }
+
+    //    public PropertyDescriptorCollection GetItemProperties(PropertyDescriptor[] listAccessors)
+    //    {
+    //        PropertyDescriptor[] dynamicDescriptors;
+
+    //        if (Columns.Any())
+    //            dynamicDescriptors = Columns.Select(p => new DynamicPropertyDescriptor(p.Name, p.Type, p.IsReadOnly)).Cast<PropertyDescriptor>().ToArray();
+    //        else
+    //            dynamicDescriptors = new PropertyDescriptor[0];
+
+    //        return new PropertyDescriptorCollection(dynamicDescriptors);
+    //    }
+    //}
 }

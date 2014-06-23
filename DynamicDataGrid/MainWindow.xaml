@@ -12,7 +12,8 @@
         <Button Grid.Row="0" Content="Click" Click="ButtonBase_OnClick"/>
         
         <DataGrid Grid.Row="1" x:Name="DynamicDataGrid" Width="500" Height="300"
-                  AutoGenerateColumns="True">
+                  AutoGenerateColumns="True"
+                  AutoGeneratingColumn="DynamicDataGrid_AutoGeneratingColumn">
             <DataGrid.ItemContainerStyle>
                 <Style TargetType="{x:Type DataGridRow}">
                     <Style.Triggers>
@@ -33,7 +34,7 @@
             </DataGrid.Columns>
         </DataGrid>
 
-        <DataGrid Grid.Row="2" x:Name="StaticDataGrid" Width="500" Height="300"
+        <!--<DataGrid Grid.Row="2" x:Name="StaticDataGrid" Width="500" Height="300"
                   AutoGenerateColumns="True">
             <DataGrid.ItemContainerStyle>
                 <Style TargetType="{x:Type DataGridRow}">
@@ -50,6 +51,6 @@
                     </Style.Triggers>
                 </Style>
             </DataGrid.ItemContainerStyle>
-        </DataGrid>
+        </DataGrid>-->
     </Grid>
 </Window>
