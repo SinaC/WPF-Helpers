@@ -10,6 +10,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using DynamicDataGrid.DynamicGrid;
+using DynamicDataGrid.ViewModels;
 
 namespace DynamicDataGrid
 {
@@ -18,69 +19,34 @@ namespace DynamicDataGrid
     /// </summary>
     public partial class MainWindow : Window
     {
+        public MainViewModel MainViewModel { get; private set; }
+
         public MainWindow()
         {
             InitializeComponent();
 
-            List<DynamicColumn> columns = new List<DynamicColumn>
-            {
-                new DynamicColumn
-                {
-                    Name = "Foo",
-                    Type = typeof(string),
-                    IsReadOnly = false,
-                },
-                new DynamicColumn
-                {
-                    Name = "Bar",
-                    Type = typeof(bool),
-                    IsReadOnly = false,
-                },
-                new DynamicColumn
-                {
-                    Name = "Order",
-                    Type = typeof(int),
-                    IsReadOnly = false,
-                },
-            };
+            MainViewModel = new MainViewModel();
 
-            List<CustomRow> rows = new List<CustomRow>
-            {
-                new CustomRow(
-                    new Tuple<string, object>("Foo", "Value1"),
-                    new Tuple<string, object>("Bar", true),
-                    new Tuple<string, object>("Order", 1))
-                {
-                    Status = 2,
-                },
-                new CustomRow(
-                    new Tuple<string, object>("Foo", "Value2"),
-                    new Tuple<string, object>("Bar", false),
-                    new Tuple<string, object>("Order", 2))
-                {
-                    Status = 3,
-                },
-                new CustomRow(
-                    new Tuple<string, object>("Foo", "Value3"),
-                    new Tuple<string, object>("Bar", true),
-                    new Tuple<string, object>("Order", 3))
-                {
-                    Status = 4,
-                }
-            };
+            DataContext = MainViewModel;
 
-            DynamicGrid<CustomRow, DynamicColumn> collection = new DynamicGrid<CustomRow, DynamicColumn>(rows, columns);
-
-            DynamicDataGrid.ItemsSource = collection;
+            //DynamicDataGrid.ItemsSource = MainViewModel.Collection;
             //StaticDataGrid.ItemsSource = rows;
         }
 
         private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
         {
-            System.Diagnostics.Debugger.Break();
+            //System.Diagnostics.Debugger.Break();
+
+            MainViewModel.Collection.AddRow(new CustomRow(
+                        new Tuple<string, object>("Foo", "Value4"),
+                        new Tuple<string, object>("Bar", false),
+                        new Tuple<string, object>("Order", 4))
+                        {
+                            Status = 4,
+                        });
         }
 
-        private void DynamicDataGrid_AutoGeneratingColumn(object sender, System.Windows.Controls.DataGridAutoGeneratingColumnEventArgs e)
+        private void DynamicDataGrid_AutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
         {
             if (e.PropertyType == typeof(int) && e.Column is DataGridBoundColumn)
             {
@@ -94,16 +60,6 @@ namespace DynamicDataGrid
                     };
                 e.Column = column;
             }
-        }
-    }
-
-    public class CustomRow : DynamicRow
-    {
-        public int Status { get; set; } // will displayed only if a column is specified in DataGrid
-
-        public CustomRow(params Tuple<string, object>[] propertyNames)
-            : base(propertyNames)
-        {
         }
     }
 }

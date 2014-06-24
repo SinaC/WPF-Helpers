@@ -1,23 +1,36 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Dynamic;
 using System.Linq;
 
 namespace DynamicDataGrid.DynamicGrid
 {
-    public class DynamicGrid<TRow, TColumn> : IList, ITypedList
+    public class DynamicGrid<TRow, TColumn> : IList, ITypedList, INotifyCollectionChanged
         where TRow : DynamicObject
         where TColumn : IDynamicColumn
     {
         public IList<TRow> Rows { get; private set; }
         public List<TColumn> Columns { get; private set; }
 
+        private IList UnspecializedRows
+        {
+            get { return (IList) Rows; }
+        }
+
         public DynamicGrid(IList<TRow> rows, IEnumerable<TColumn> columns)
         {
             Rows = rows;
             Columns = columns.ToList();
+        }
+
+        public void AddRow(TRow row)
+        {
+            Rows.Add(row);
+            RaiseCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, row));
         }
 
         #region ITypedList
@@ -40,11 +53,6 @@ namespace DynamicDataGrid.DynamicGrid
         }
 
         #endregion
-
-        private IList UnspecializedRows
-        {
-            get { return (IList) Rows; }
-        }
 
         #region IList
 
@@ -75,7 +83,9 @@ namespace DynamicDataGrid.DynamicGrid
 
         public int Add(object value)
         {
-            return UnspecializedRows.Add(value);
+            int index = UnspecializedRows.Add(value);
+            RaiseCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, value));
+            return index;
         }
 
         public bool Contains(object value)
@@ -86,6 +96,7 @@ namespace DynamicDataGrid.DynamicGrid
         public void Clear()
         {
             UnspecializedRows.Clear();
+            RaiseCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
         }
 
         public int IndexOf(object value)
@@ -96,16 +107,20 @@ namespace DynamicDataGrid.DynamicGrid
         public void Insert(int index, object value)
         {
             UnspecializedRows.Insert(index, value);
+            RaiseCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, value));
         }
 
         public void Remove(object value)
         {
             UnspecializedRows.Remove(value);
+            RaiseCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Remove, value));
         }
 
         public void RemoveAt(int index)
         {
+            object o = this[index];
             UnspecializedRows.RemoveAt(index);
+            RaiseCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, o));
         }
 
         public object this[int index]
@@ -122,6 +137,17 @@ namespace DynamicDataGrid.DynamicGrid
         public bool IsFixedSize
         {
             get { return UnspecializedRows.IsFixedSize; }
+        }
+
+        #endregion
+
+        #region INotifyCollectionChanged Members
+
+        public event NotifyCollectionChangedEventHandler CollectionChanged;
+        private void RaiseCollectionChanged(NotifyCollectionChangedEventArgs e)
+        {
+            if (CollectionChanged != null)
+                CollectionChanged(this, e);
         }
 
         #endregion

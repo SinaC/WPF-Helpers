@@ -11,7 +11,8 @@
         
         <Button Grid.Row="0" Content="Click" Click="ButtonBase_OnClick"/>
         
-        <DataGrid Grid.Row="1" x:Name="DynamicDataGrid" Width="500" Height="300"
+        <DataGrid Grid.Row="1" x:Name="DynamicDataGrid" Width="500" Height="100"
+                  ItemsSource="{Binding Collection}"
                   AutoGenerateColumns="True"
                   AutoGeneratingColumn="DynamicDataGrid_AutoGeneratingColumn">
             <DataGrid.ItemContainerStyle>
@@ -30,9 +31,27 @@
                 </Style>
             </DataGrid.ItemContainerStyle>
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Status" Binding="{Binding Status}"></DataGridTextColumn>
+                <DataGridTextColumn Header="StatusManual" Binding="{Binding Status}"/>
+                <DataGridTextColumn Header="OrderManual" Binding="{Binding Order}"/>
             </DataGrid.Columns>
         </DataGrid>
+        
+        <ItemsControl Grid.Row="2" Width="500" Height="100"
+                      ItemsSource="{Binding Collection}">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding Status}"/>
+                        <TextBlock Text="|"/>
+                        <TextBlock Text="{Binding Foo}"/>
+                        <TextBlock Text="|"/>
+                        <TextBlock Text="{Binding Bar}"/>
+                        <TextBlock Text="|"/>
+                        <TextBlock Text="{Binding Order}"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
 
         <!--<DataGrid Grid.Row="2" x:Name="StaticDataGrid" Width="500" Height="300"
                   AutoGenerateColumns="True">

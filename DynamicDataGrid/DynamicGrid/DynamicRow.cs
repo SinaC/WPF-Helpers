@@ -3,13 +3,17 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Dynamic;
 using System.Linq;
-using System.Windows.Data;
+using System.Runtime.CompilerServices;
 
 namespace DynamicDataGrid.DynamicGrid
 {
-    public class DynamicRow : DynamicObject
+    public class DynamicRow : DynamicObject, INotifyPropertyChanged
     {
         private readonly Dictionary<string, object> _dynamicProperties;
+
+        public DynamicRow()
+        {
+        }
 
         public DynamicRow(params KeyValuePair<string, object>[] propertyNames)
         {
@@ -31,11 +35,11 @@ namespace DynamicDataGrid.DynamicGrid
             _dynamicProperties = propertyNames.ToDictionary(x => x.Item1, x => x.Item2);
         }
 
-        public bool AddCell(string name, object value)
+        public bool AddProperty(string propertyName, object propertyValue)
         {
-            if (_dynamicProperties.ContainsKey(name))
+            if (_dynamicProperties.ContainsKey(propertyName))
                 return false;
-            _dynamicProperties.Add(name, value);
+            _dynamicProperties.Add(propertyName, propertyValue);
             return true;
         }
 
@@ -52,19 +56,23 @@ namespace DynamicDataGrid.DynamicGrid
                     {
                         object converted = converter.ConvertFrom(value);
                         _dynamicProperties[binder.Name] = converted;
+                        RaisePropertyChanged(binder.Name);
                     }
-                        // TODO: should notify row error provider
-                    catch(FormatException ex)
+                    // TODO: should notify row error provider
+                    catch (FormatException ex)
                     {
                         return false;
                     }
-                    catch(Exception ex)
+                    catch (Exception ex)
                     {
                         return false;
                     }
                 }
                 else
+                {
                     _dynamicProperties[binder.Name] = value;
+                    RaisePropertyChanged(binder.Name);
+                }
                 return true;
             }
 
@@ -86,5 +94,16 @@ namespace DynamicDataGrid.DynamicGrid
         {
             return _dynamicProperties.Keys.ToArray();
         }
+
+        #region INotifyPropertyChanged
+        
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected virtual void RaisePropertyChanged([CallerMemberName]string propertyName = null)
+        {
+            if (PropertyChanged != null) 
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+        }
+        
+        #endregion
     }
 }
