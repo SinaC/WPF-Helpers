@@ -32,7 +32,7 @@
             </DataGrid.ItemContainerStyle>
             <DataGrid.Columns>
                 <DataGridTextColumn Header="StatusManual" Binding="{Binding Status}"/>
-                <DataGridTextColumn Header="OrderManual" Binding="{Binding Order}"/>
+                <!--<DataGridTextColumn Header="OrderManual" Binding="{Binding Order, ValidatesOnDataErrors=True}"/>-->
             </DataGrid.Columns>
         </DataGrid>
         

@@ -7,9 +7,10 @@ using System.Runtime.CompilerServices;
 
 namespace DynamicDataGrid.DynamicGrid
 {
-    public class DynamicRow : DynamicObject, INotifyPropertyChanged
+    public class DynamicRow : DynamicObject, INotifyPropertyChanged//, IDataErrorInfo
     {
         private readonly Dictionary<string, object> _dynamicProperties;
+        //private readonly Dictionary<string, bool> _dynamicValidities;
 
         public DynamicRow()
         {
@@ -18,21 +19,21 @@ namespace DynamicDataGrid.DynamicGrid
         public DynamicRow(params KeyValuePair<string, object>[] propertyNames)
         {
             _dynamicProperties = propertyNames.ToDictionary(s => s.Key, s => s.Value);
+            //_dynamicValidities = propertyNames.ToDictionary(s => s.Key, s => true);
         }
 
-        public DynamicRow(IEnumerable<KeyValuePair<string, object>> propertyNames)
+        public DynamicRow(IEnumerable<KeyValuePair<string, object>> propertyNames) : this(propertyNames.ToArray())
         {
-            _dynamicProperties = propertyNames.ToDictionary(s => s.Key, s => s.Value);
         }
 
         public DynamicRow(params Tuple<string, object>[] propertyNames)
         {
             _dynamicProperties = propertyNames.ToDictionary(x => x.Item1, x => x.Item2);
+            //_dynamicValidities = propertyNames.ToDictionary(s => s.Item1, s => true);
         }
 
-        public DynamicRow(IEnumerable<Tuple<string, object>> propertyNames)
+        public DynamicRow(IEnumerable<Tuple<string, object>> propertyNames) : this(propertyNames.ToArray())
         {
-            _dynamicProperties = propertyNames.ToDictionary(x => x.Item1, x => x.Item2);
         }
 
         public bool AddProperty(string propertyName, object propertyValue)
@@ -40,13 +41,13 @@ namespace DynamicDataGrid.DynamicGrid
             if (_dynamicProperties.ContainsKey(propertyName))
                 return false;
             _dynamicProperties.Add(propertyName, propertyValue);
+            //_dynamicValidities.Add(propertyName, true);
             return true;
         }
 
         public override bool TrySetMember(SetMemberBinder binder, object value)
         {
             // TODO: type checking
-            // !!!!! if column is a int, editable column will be textbox -> value is of type string
             if (_dynamicProperties.ContainsKey(binder.Name))
             {
                 if (_dynamicProperties[binder.Name].GetType() != value.GetType())
@@ -56,23 +57,30 @@ namespace DynamicDataGrid.DynamicGrid
                     {
                         object converted = converter.ConvertFrom(value);
                         _dynamicProperties[binder.Name] = converted;
+                        //_dynamicValidities[binder.Name] = true;
                         RaisePropertyChanged(binder.Name);
                     }
                     // TODO: should notify row error provider
                     catch (FormatException ex)
                     {
+                        //_dynamicValidities[binder.Name] = false;
+                        RaisePropertyChanged(binder.Name);
                         return false;
                     }
                     catch (Exception ex)
                     {
+                        //_dynamicValidities[binder.Name] = false;
+                        RaisePropertyChanged(binder.Name);
                         return false;
                     }
                 }
                 else
                 {
                     _dynamicProperties[binder.Name] = value;
+                    //_dynamicValidities[binder.Name] = true;
                     RaisePropertyChanged(binder.Name);
                 }
+
                 return true;
             }
 
@@ -105,5 +113,16 @@ namespace DynamicDataGrid.DynamicGrid
         }
         
         #endregion
+
+        //#region IDataErrorInfo
+
+        //public string this[string columnName]
+        //{
+        //    get { return _dynamicValidities[columnName] ? null : "Error"; }
+        //}
+
+        //public string Error { get { return String.Empty; } }
+
+        //#endregion
     }
 }

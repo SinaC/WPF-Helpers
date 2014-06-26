@@ -48,18 +48,30 @@ namespace DynamicDataGrid
 
         private void DynamicDataGrid_AutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
         {
-            if (e.PropertyType == typeof(int) && e.Column is DataGridBoundColumn)
-            {
-                // TODO: replace with DataGridTemplateColumn including a NumericUpDown control
-                DataGridComboBoxColumn column = new DataGridComboBoxColumn
-                    {
-                        IsReadOnly = e.Column.IsReadOnly,
-                        Header = e.Column.Header,
-                        SelectedItemBinding = (e.Column as DataGridBoundColumn).Binding,
-                        ItemsSource = new List<int> {0, 1, 2, 3, 4, 5, 6, 7, 8},
-                    };
-                e.Column = column;
-            }
+            double toto = DynamicDataGrid.ActualHeight;
+            //if (e.PropertyType == typeof(int) && e.Column is DataGridBoundColumn)
+            //{
+            //    // TODO: replace with DataGridTemplateColumn including a NumericUpDown control
+            //    DataGridComboBoxColumn column = new DataGridComboBoxColumn
+            //        {
+            //            IsReadOnly = e.Column.IsReadOnly,
+            //            Header = e.Column.Header,
+            //            SelectedItemBinding = (e.Column as DataGridBoundColumn).Binding,
+            //            ItemsSource = new List<int> {0, 1, 2, 3, 4, 5, 6, 7, 8},
+            //        };
+            //    e.Column = column;
+            //}
+            //if (e.Column is DataGridBoundColumn)
+            //{
+            //    DataGridBoundColumn boundColumn = e.Column as DataGridBoundColumn;
+            //    if (boundColumn.Binding is Binding)
+            //    {
+            //        Binding binding = boundColumn.Binding as Binding;
+            //        //binding.ValidatesOnDataErrors = true;
+            //        binding.ValidationRules.Clear();
+            //        binding.ValidationRules.Add(new ExceptionValidationRule());
+            //    }
+            //}
         }
     }
 }
