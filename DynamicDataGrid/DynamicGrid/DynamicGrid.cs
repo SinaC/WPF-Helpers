@@ -18,7 +18,7 @@ namespace DynamicDataGrid.DynamicGrid
 
         private IList UnspecializedRows
         {
-            get { return (IList) Rows; }
+            get { return (IList)Rows; }
         }
 
         public DynamicGrid(IList<TRow> rows, IEnumerable<TColumn> columns)
@@ -45,7 +45,7 @@ namespace DynamicDataGrid.DynamicGrid
             PropertyDescriptor[] dynamicDescriptors;
 
             if (Columns.Any())
-                dynamicDescriptors = Columns.Select(column => new DynamicPropertyDescriptor(column.Name, column.Type, column.IsReadOnly)).Cast<PropertyDescriptor>().ToArray();
+                dynamicDescriptors = Columns.Select(column => new DynamicPropertyDescriptor(column.Name, column.DisplayName, column.Type, column.IsReadOnly)).Cast<PropertyDescriptor>().ToArray();
             else
                 dynamicDescriptors = new PropertyDescriptor[0];
 

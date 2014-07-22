@@ -7,12 +7,14 @@ namespace DynamicDataGrid.DynamicGrid
 {
     public class DynamicPropertyDescriptor : PropertyDescriptor
     {
+        private readonly string _displayName;
         private readonly Type _dynamicType;
         private readonly bool _isReadOnly;
 
-        public DynamicPropertyDescriptor(string name, Type type, bool isReadOnly = false)
+        public DynamicPropertyDescriptor(string name, string displayName, Type type, bool isReadOnly = false)
             : base(name, null)
         {
+            _displayName = displayName;
             _dynamicType = type;
             _isReadOnly = isReadOnly;
         }
@@ -43,7 +45,7 @@ namespace DynamicDataGrid.DynamicGrid
 
         public override Type ComponentType
         {
-            get { return typeof (object); }
+            get { return typeof(object); }
         }
 
         public override bool IsReadOnly
@@ -54,6 +56,11 @@ namespace DynamicDataGrid.DynamicGrid
         public override Type PropertyType
         {
             get { return _dynamicType; }
+        }
+
+        public override string DisplayName
+        {
+            get { return _displayName; }
         }
 
         private static void SetDynamicMember(object obj, string memberName, object value)

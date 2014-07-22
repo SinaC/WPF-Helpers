@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Dynamic;
 using System.Linq;
+using System.Linq.Expressions;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 
 namespace DynamicDataGrid.DynamicGrid
@@ -14,6 +16,8 @@ namespace DynamicDataGrid.DynamicGrid
 
         public DynamicRow()
         {
+            _dynamicProperties = new Dictionary<string, object>();
+            //_dynamicValidities = new Dictionary<string, bool>();
         }
 
         public DynamicRow(params KeyValuePair<string, object>[] propertyNames)
@@ -22,7 +26,8 @@ namespace DynamicDataGrid.DynamicGrid
             //_dynamicValidities = propertyNames.ToDictionary(s => s.Key, s => true);
         }
 
-        public DynamicRow(IEnumerable<KeyValuePair<string, object>> propertyNames) : this(propertyNames.ToArray())
+        public DynamicRow(IEnumerable<KeyValuePair<string, object>> propertyNames)
+            : this(propertyNames.ToArray())
         {
         }
 
@@ -32,17 +37,30 @@ namespace DynamicDataGrid.DynamicGrid
             //_dynamicValidities = propertyNames.ToDictionary(s => s.Item1, s => true);
         }
 
-        public DynamicRow(IEnumerable<Tuple<string, object>> propertyNames) : this(propertyNames.ToArray())
+        public DynamicRow(IEnumerable<Tuple<string, object>> propertyNames)
+            : this(propertyNames.ToArray())
         {
         }
 
-        public bool AddProperty(string propertyName, object propertyValue)
+        public bool TryAddProperty(string propertyName, object propertyValue)
         {
             if (_dynamicProperties.ContainsKey(propertyName))
                 return false;
             _dynamicProperties.Add(propertyName, propertyValue);
             //_dynamicValidities.Add(propertyName, true);
+            OnPropertyChanged(propertyName);
             return true;
+        }
+
+        public bool TryGetProperty(string propertyName, out object propertyValue)
+        {
+            propertyValue = null;
+            if (_dynamicProperties.ContainsKey(propertyName))
+            {
+                propertyValue = _dynamicProperties[propertyName];
+                return true;
+            }
+            return false;
         }
 
         public override bool TrySetMember(SetMemberBinder binder, object value)
@@ -58,19 +76,19 @@ namespace DynamicDataGrid.DynamicGrid
                         object converted = converter.ConvertFrom(value);
                         _dynamicProperties[binder.Name] = converted;
                         //_dynamicValidities[binder.Name] = true;
-                        RaisePropertyChanged(binder.Name);
+                        OnPropertyChanged(binder.Name);
                     }
                     // TODO: should notify row error provider
                     catch (FormatException ex)
                     {
                         //_dynamicValidities[binder.Name] = false;
-                        RaisePropertyChanged(binder.Name);
+                        OnPropertyChanged(binder.Name);
                         return false;
                     }
                     catch (Exception ex)
                     {
                         //_dynamicValidities[binder.Name] = false;
-                        RaisePropertyChanged(binder.Name);
+                        OnPropertyChanged(binder.Name);
                         return false;
                     }
                 }
@@ -78,7 +96,7 @@ namespace DynamicDataGrid.DynamicGrid
                 {
                     _dynamicProperties[binder.Name] = value;
                     //_dynamicValidities[binder.Name] = true;
-                    RaisePropertyChanged(binder.Name);
+                    OnPropertyChanged(binder.Name);
                 }
 
                 return true;
@@ -104,15 +122,53 @@ namespace DynamicDataGrid.DynamicGrid
         }
 
         #region INotifyPropertyChanged
-        
+
         public event PropertyChangedEventHandler PropertyChanged;
-        protected virtual void RaisePropertyChanged([CallerMemberName]string propertyName = null)
+        protected virtual void OnPropertyChanged([CallerMemberName]string propertyName = null)
         {
-            if (PropertyChanged != null) 
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            PropertyChangedEventHandler handler = PropertyChanged;
+            if (handler != null)
+                handler(this, new PropertyChangedEventArgs(propertyName));
         }
-        
+
         #endregion
+
+        private string GetPropertyName<T>(Expression<Func<T>> propertyExpression)
+        {
+            if (propertyExpression == null)
+                throw new ArgumentNullException("propertyExpression");
+
+            MemberExpression body = propertyExpression.Body as MemberExpression;
+
+            if (body == null)
+                throw new ArgumentException(@"Invalid argument", "propertyExpression");
+
+            PropertyInfo property = body.Member as PropertyInfo;
+
+            if (property == null)
+                throw new ArgumentException(@"Argument is not a property", "propertyExpression");
+
+            return property.Name;
+        }
+
+        protected bool Set<T>(Expression<Func<T>> selectorExpression, ref T field, T newValue)
+        {
+            if (EqualityComparer<T>.Default.Equals(field, newValue))
+                return false;
+            field = newValue;
+            string propertyName = GetPropertyName(selectorExpression);
+            OnPropertyChanged(propertyName);
+            return true;
+        }
+
+        protected bool Set<T>(string propertyName, ref T field, T newValue)
+        {
+            if (EqualityComparer<T>.Default.Equals(field, newValue))
+                return false;
+            field = newValue;
+            OnPropertyChanged(propertyName);
+            return true;
+        }
 
         //#region IDataErrorInfo
 

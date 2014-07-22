@@ -12,14 +12,7 @@ namespace DynamicDataGrid.ViewModels
         public int Status
         {
             get { return _status; }
-            set
-            {
-                if (_status != value)
-                {
-                    _status = value;
-                    RaisePropertyChanged();
-                }
-            }
+            set { Set(() => Status, ref _status, value); }
         }
 
         public CustomRow(params Tuple<string, object>[] propertyNames)

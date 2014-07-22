@@ -37,13 +37,19 @@ namespace DynamicDataGrid
         {
             //System.Diagnostics.Debugger.Break();
 
-            MainViewModel.Collection.AddRow(new CustomRow(
-                        new Tuple<string, object>("Foo", "Value4"),
-                        new Tuple<string, object>("Bar", false),
-                        new Tuple<string, object>("Order", 4))
-                        {
-                            Status = 4,
-                        });
+            //MainViewModel.Collection.AddRow(new CustomRow(
+            //            new Tuple<string, object>("Foo", "Value4"),
+            //            new Tuple<string, object>("Bar", false),
+            //            new Tuple<string, object>("Order", 4))
+            //            {
+            //                Status = 4,
+            //            });
+            CustomRow newRow = new CustomRow();
+            newRow.Status = 4;
+            newRow.TryAddProperty("Foo", "Value4");
+            newRow.TryAddProperty("Bar", false);
+            newRow.TryAddProperty("Order", 4);
+            MainViewModel.Collection.AddRow(newRow);
         }
 
         private void DynamicDataGrid_AutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
