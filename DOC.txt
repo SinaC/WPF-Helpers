@@ -1,0 +1,3 @@
+WPF+MVVM+Modals
+http://stackoverflow.com/questions/3801681/good-or-bad-practice-for-dialogs-in-wpf-with-mvvm
+http://stackoverflow.com/questions/16993433/mvvm-light-wpf-binding-multiple-instances-of-a-window-to-a-viewmodel/16994523#16994523

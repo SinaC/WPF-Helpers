@@ -11,6 +11,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CustomControls", "CustomCon
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DynamicDataGrid", "DynamicDataGrid\DynamicDataGrid.csproj", "{99234ADC-1240-45B8-8BD0-AC6E979A08CA}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{A7CB95FE-EAC3-43AC-A958-C59EEA96E701}"
+	ProjectSection(SolutionItems) = preProject
+		DOC.txt = DOC.txt
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
