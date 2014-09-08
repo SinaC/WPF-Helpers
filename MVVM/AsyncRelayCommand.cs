@@ -4,7 +4,7 @@ using System.Windows.Input;
 
 namespace MVVM
 {
-    public class AsyncRelayCommand : ICommand
+    public class AsyncRelayCommand : IAsyncRelayCommand
     {
         readonly Action _execute;
         readonly Func<bool> _canExecute;
@@ -23,6 +23,8 @@ namespace MVVM
             _canExecute = canExecute;
         }
 
+        #region IAsyncRelayCommand
+
         #region ICommand
 
         public event EventHandler CanExecuteChanged
@@ -38,14 +40,22 @@ namespace MVVM
 
         public async void Execute(object parameter)
         {
-            if (CanExecute(parameter))
-                await Task.Run(() => _execute());
+            if (!CanExecute(parameter))
+                return;
+            await ExecuteAsync(parameter);
+        }
+
+        #endregion
+
+        public async Task ExecuteAsync(object parameter)
+        {
+            await Task.Run(() => _execute);
         }
 
         #endregion
     }
 
-    public class AsyncRelayCommand<T> : ICommand
+    public class AsyncRelayCommand<T> : IAsyncRelayCommand<T>
     {
         readonly Action<T> _execute;
         readonly Func<T, bool> _canExecute;
@@ -81,18 +91,24 @@ namespace MVVM
         {
             object val = parameter;
 
-            if (parameter != null && parameter.GetType() != typeof(T) && parameter is IConvertible)
-                val = Convert.ChangeType(parameter, typeof(T), null);
+            if (parameter != null && parameter.GetType() != typeof (T) && parameter is IConvertible)
+                val = Convert.ChangeType(parameter, typeof (T), null);
 
-            if (CanExecute(val))
-            {
-                if (val == null)
-                    await Task.Run(() => _execute(default(T)));
-                else
-                    await Task.Run(() => _execute((T)val));
-            }
+            if (!CanExecute(val))
+                return;
+            T value;
+            if (val == null)
+                value = default(T);
+            else
+                value = (T) val;
+            await ExecuteAsync(value);
         }
 
         #endregion
+
+        public async Task ExecuteAsync(T parameter)
+        {
+            await Task.Run(() => _execute);
+        }
     }
 }

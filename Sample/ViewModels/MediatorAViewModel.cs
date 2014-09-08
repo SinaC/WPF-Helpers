@@ -14,7 +14,7 @@ namespace Sample.ViewModels
                 {
                     _myPropertyA = value;
                     OnPropertyChanged();
-                    Mediator.Send(value, "ViewB");
+                    Mediator.Default.Send(value, "ViewB");
                 }
             }
         }
@@ -35,7 +35,7 @@ namespace Sample.ViewModels
 
         public MediatorAViewModel()
         {
-            Mediator.Register<string>(this, "ViewA", DoAction);
+            Mediator.Default.Register<string>(this, "ViewA", DoAction);
         }
 
         private void DoAction(string param)

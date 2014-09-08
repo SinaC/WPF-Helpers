@@ -41,6 +41,8 @@
     <Compile Include="AsyncRelayCommand.cs" />
     <Compile Include="AttachedFocus.cs" />
     <Compile Include="EventToCommand.cs" />
+    <Compile Include="IAsyncRelayCommand.cs" />
+    <Compile Include="IMediator.cs" />
     <Compile Include="Mediator.cs" />
     <Compile Include="RelayCommand.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

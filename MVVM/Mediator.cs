@@ -6,7 +6,7 @@ using System.Threading;
 
 namespace MVVM
 {
-    public static class Mediator
+    public sealed class Mediator : IMediator
     {
         private class Subscription
         {
@@ -45,10 +45,16 @@ namespace MVVM
             }
         }
 
-        private static readonly Dictionary<Type, List<Subscription>> Recipients = new Dictionary<Type, List<Subscription>>();
+        private readonly Dictionary<Type, List<Subscription>> _recipients = new Dictionary<Type, List<Subscription>>();
+
+        private static readonly Lazy<Mediator> LazyDefault = new Lazy<Mediator>(() => new Mediator());
+        public static IMediator Default
+        {
+            get { return LazyDefault.Value; }
+        }
 
         #region Register
-        public static void Register<T>(object recipient, Action<T> action)
+        public void Register<T>(object recipient, Action<T> action)
         {
             if (recipient == null)
                 throw new ArgumentNullException("recipient");
@@ -57,24 +63,24 @@ namespace MVVM
             Register(recipient, null, action);
         }
 
-        public static void Register<T>(object recipient, object token, Action<T> action)
+        public void Register<T>(object recipient, object token, Action<T> action)
         {
             if (recipient == null)
                 throw new ArgumentNullException("recipient");
             if (action == null)
                 throw new ArgumentNullException("action");
-            lock (Recipients)
+            lock (_recipients)
             {
                 Type messageType = typeof(T);
 
                 List<Subscription> subscriptions;
-                if (!Recipients.ContainsKey(messageType))
+                if (!_recipients.ContainsKey(messageType))
                 {
                     subscriptions = new List<Subscription>();
-                    Recipients.Add(messageType, subscriptions);
+                    _recipients.Add(messageType, subscriptions);
                 }
                 else
-                    subscriptions = Recipients[messageType];
+                    subscriptions = _recipients[messageType];
 
                 lock (subscriptions)
                 {
@@ -86,62 +92,62 @@ namespace MVVM
         #endregion
 
         #region Unregister
-        public static void Unregister(object recipient)
+        public void Unregister(object recipient)
         {
-            lock (Recipients)
+            lock (_recipients)
             {
-                foreach (KeyValuePair<Type, List<Subscription>> kv in Recipients)
+                foreach (KeyValuePair<Type, List<Subscription>> kv in _recipients)
                     UnregisterFromList(kv.Value, x => x.Recipient == recipient);
             }
         }
 
-        public static void Unregister<T>(object recipient)
+        public void Unregister<T>(object recipient)
         {
-            lock (Recipients)
+            lock (_recipients)
             {
                 Type messageType = typeof(T);
-                if (Recipients.ContainsKey(messageType))
-                    UnregisterFromList(Recipients[messageType], x => x.Recipient == recipient);
+                if (_recipients.ContainsKey(messageType))
+                    UnregisterFromList(_recipients[messageType], x => x.Recipient == recipient);
             }
         }
 
-        public static void Unregister<T>(object recipient, Action<T> action)
+        public void Unregister<T>(object recipient, Action<T> action)
         {
-            lock (Recipients)
+            lock (_recipients)
             {
                 Type messageType = typeof(T);
                 MethodInfo method = action.Method;
 
-                if (Recipients.ContainsKey(messageType))
-                    UnregisterFromList(Recipients[messageType], x => x.Recipient == recipient && x.Method == method);
+                if (_recipients.ContainsKey(messageType))
+                    UnregisterFromList(_recipients[messageType], x => x.Recipient == recipient && x.Method == method);
             }
         }
 
-        public static void Unregister<T>(object recipient, object token)
+        public void Unregister<T>(object recipient, object token)
         {
-            lock (Recipients)
+            lock (_recipients)
             {
                 Type messageType = typeof(T);
 
-                if (Recipients.ContainsKey(messageType))
-                    UnregisterFromList(Recipients[messageType], x => x.Recipient == recipient && x.Token == token);
+                if (_recipients.ContainsKey(messageType))
+                    UnregisterFromList(_recipients[messageType], x => x.Recipient == recipient && x.Token == token);
             }
         }
 
-        public static void Unregister<T>(object recipient, object token, Action<T> action)
+        public void Unregister<T>(object recipient, object token, Action<T> action)
         {
-            lock (Recipients)
+            lock (_recipients)
             {
                 Type messageType = typeof(T);
                 MethodInfo method = action.Method;
 
-                if (Recipients.ContainsKey(messageType))
-                    UnregisterFromList(Recipients[messageType], x => x.Recipient == recipient && x.Method == method && x.Token == token);
+                if (_recipients.ContainsKey(messageType))
+                    UnregisterFromList(_recipients[messageType], x => x.Recipient == recipient && x.Method == method && x.Token == token);
             }
         }
 
         //
-        private static void UnregisterFromList(List<Subscription> list, Func<Subscription, bool> filter)
+        private void UnregisterFromList(List<Subscription> list, Func<Subscription, bool> filter)
         {
             lock (list)
             {
@@ -154,24 +160,24 @@ namespace MVVM
         #endregion
 
         #region Send
-        public static void Send<T>(T message)
+        public void Send<T>(T message)
         {
             Send(message, null);
         }
 
-        public static void Send<T>(T message, object token)
+        public void Send<T>(T message, object token)
         {
             List<Subscription> clone = null;
-            lock (Recipients)
+            lock (_recipients)
             {
                 Type messageType = typeof(T);
 
-                if (Recipients.ContainsKey(messageType))
+                if (_recipients.ContainsKey(messageType))
                 {
                     // Clone to avoid problem if register/unregistering in "receive message" method
-                    lock (Recipients[messageType])
+                    lock (_recipients[messageType])
                     {
-                        clone = Recipients[messageType].Where(x => (x.Token == null && token == null)
+                        clone = _recipients[messageType].Where(x => (x.Token == null && token == null)
                                                                    ||
                                                                    (x.Token != null && x.Token.Equals(token))
                             ).ToList();
@@ -182,7 +188,7 @@ namespace MVVM
                 SendToList(clone, message);
         }
 
-        private static void SendToList<T>(IEnumerable<Subscription> list, T message)
+        private void SendToList<T>(IEnumerable<Subscription> list, T message)
         {
             // Send message to matching recipients
             List<Exception> exceptions = new List<Exception>();
@@ -219,12 +225,12 @@ namespace MVVM
         #endregion
 
         #region Cleanup
-        private static void Cleanup()
+        private void Cleanup()
         {
             // Clean dead recipients
-            lock (Recipients)
+            lock (_recipients)
             {
-                foreach (KeyValuePair<Type, List<Subscription>> kv in Recipients)
+                foreach (KeyValuePair<Type, List<Subscription>> kv in _recipients)
                 {
                     List<Subscription> list = kv.Value;
                     List<Subscription> toRemove = list.Where(x => !x.IsAlive || x.Recipient == null).ToList();

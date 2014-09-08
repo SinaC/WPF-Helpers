@@ -14,14 +14,14 @@ namespace Sample.ViewModels
                 {
                     _myPropertyB = value;
                     OnPropertyChanged();
-                    Mediator.Send(value, "ViewA");
+                    Mediator.Default.Send(value, "ViewA");
                 }
             }
         }
 
         public MediatorBViewModel()
         {
-            Mediator.Register<string>(this, "ViewB", DoAction);
+            Mediator.Default.Register<string>(this, "ViewB", DoAction);
         }
 
         private void DoAction(string param)
