@@ -1,3 +1,11 @@
 WPF+MVVM+Modals
 http://stackoverflow.com/questions/3801681/good-or-bad-practice-for-dialogs-in-wpf-with-mvvm
 http://stackoverflow.com/questions/16993433/mvvm-light-wpf-binding-multiple-instances-of-a-window-to-a-viewmodel/16994523#16994523
+
+Datagrid dynamic
+http://paulstovell.com/blog/dynamic-datagrid
+http://www.codeproject.com/Articles/36462/Binding-a-ListView-to-a-Data-Matrix
+http://zamjad.wordpress.com/2011/09/15/datagrid-with-dynamic-columns/
+http://www.reimers.dk/jacob-reimers-blog/auto-generating-datagrid-columns-from-dynamicobjects
+http://www.reimers.dk/jacob-reimers-blog/creating-dtos-at-runtime
+http://www.reimers.dk/jacob-reimers-blog/creating-dtos-at-runtime
