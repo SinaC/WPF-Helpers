@@ -1,15 +1,7 @@
-﻿//http://stackoverflow.com/questions/882214/data-binding-dynamic-data
-//http://www.reimers.dk/jacob-reimers-blog/auto-generating-datagrid-columns-from-dynamicobjects
-//http://jopinblog.wordpress.com/2007/04/30/implementing-itypedlist-for-virtual-properties/
-//http://jopinblog.wordpress.com/2007/05/12/dynamic-propertydescriptors-with-anonymous-methods/
-//http://www.shujaat.net/2012/09/dynamicobject-wpf-binding.html
-//http://www.shujaat.net/2012/09/dynamically-generated-properties-using.html
-using System;
-using System.Collections.Generic;
+﻿using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using DynamicDataGrid.DynamicGrid;
 using DynamicDataGrid.ViewModels;
 
 namespace DynamicDataGrid
@@ -78,6 +70,49 @@ namespace DynamicDataGrid
             //        binding.ValidationRules.Add(new ExceptionValidationRule());
             //    }
             //}
+        }
+
+        private void DynamicDataGrid_OnAutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
+        {
+            var propertyDescriptor = (PropertyDescriptor)e.PropertyDescriptor;
+            var dataBoundColumn = (DataGridBoundColumn)e.Column;
+
+            if (propertyDescriptor.PropertyType == typeof(int))
+            {
+                e.Column = new CustomBoundColumn // TODO: value is not updated in DynamicRow
+                {
+                    TemplateName = "IntTemplate",
+                    Header = propertyDescriptor.Name,
+                    Binding = dataBoundColumn.Binding,
+                    IsReadOnly = propertyDescriptor.IsReadOnly
+                };
+            }
+        }
+
+        public class CustomBoundColumn : DataGridBoundColumn
+        {
+            public string TemplateName { get; set; }
+
+            protected override FrameworkElement GenerateElement(DataGridCell cell, object dataItem)
+            {
+                var binding = new Binding(((Binding)Binding).Path.Path)
+                {
+                    Source = dataItem,
+                    Mode =  BindingMode.TwoWay
+                };
+
+                var content = new ContentControl
+                {
+                    ContentTemplate = (DataTemplate) cell.FindResource(TemplateName)
+                };
+                content.SetBinding(ContentControl.ContentProperty, binding);
+                return content;
+            }
+
+            protected override FrameworkElement GenerateEditingElement(DataGridCell cell, object dataItem)
+            {
+                return GenerateElement(cell, dataItem);
+            }
         }
     }
 }

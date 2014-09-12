@@ -9,3 +9,11 @@ http://zamjad.wordpress.com/2011/09/15/datagrid-with-dynamic-columns/
 http://www.reimers.dk/jacob-reimers-blog/auto-generating-datagrid-columns-from-dynamicobjects
 http://www.reimers.dk/jacob-reimers-blog/creating-dtos-at-runtime
 http://www.reimers.dk/jacob-reimers-blog/creating-dtos-at-runtime
+http://stackoverflow.com/questions/882214/data-binding-dynamic-data
+http://jopinblog.wordpress.com/2007/04/30/implementing-itypedlist-for-virtual-properties/
+http://jopinblog.wordpress.com/2007/05/12/dynamic-propertydescriptors-with-anonymous-methods/
+http://www.shujaat.net/2012/09/dynamicobject-wpf-binding.html
+http://www.shujaat.net/2012/09/dynamically-generated-properties-using.html
+http://code.cheesydesign.com/?p=701
+http://stackoverflow.com/questions/301356/difference-between-componentmodel-reflection-e-g-propertydescriptor-and-standa
+http://stackoverflow.com/questions/13880616/wpf-datagrid-apply-datagridtemplatecolumn-celltemplate-dynamically
