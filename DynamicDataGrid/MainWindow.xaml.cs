@@ -2,6 +2,7 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
+using DynamicDataGrid.DynamicGrid;
 using DynamicDataGrid.ViewModels;
 
 namespace DynamicDataGrid
@@ -20,33 +21,17 @@ namespace DynamicDataGrid
             MainViewModel = new MainViewModel();
 
             DataContext = MainViewModel;
-
-            //DynamicDataGrid.ItemsSource = MainViewModel.Collection;
-            //StaticDataGrid.ItemsSource = rows;
         }
 
-        private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
-        {
-            //System.Diagnostics.Debugger.Break();
-
-            //MainViewModel.Collection.AddRow(new CustomRow(
-            //            new Tuple<string, object>("Foo", "Value4"),
-            //            new Tuple<string, object>("Bar", false),
-            //            new Tuple<string, object>("Order", 4))
-            //            {
-            //                Status = 4,
-            //            });
-            CustomRow newRow = new CustomRow();
-            newRow.Status = 4;
-            newRow.TryAddProperty("Foo", "Value4");
-            newRow.TryAddProperty("Bar", false);
-            newRow.TryAddProperty("Order", 4);
-            MainViewModel.Collection.AddRow(newRow);
-        }
 
         private void DynamicDataGrid_AutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
         {
-            double toto = DynamicDataGrid.ActualHeight;
+            DynamicPropertyDescriptor propertyDescriptor = e.PropertyDescriptor as DynamicPropertyDescriptor;
+            if (propertyDescriptor != null)
+            {
+                e.Column.Header = propertyDescriptor.DisplayName ?? propertyDescriptor.Name;
+            }
+            //double toto = DynamicDataGrid.ActualHeight;
             //if (e.PropertyType == typeof(int) && e.Column is DataGridBoundColumn)
             //{
             //    // TODO: replace with DataGridTemplateColumn including a NumericUpDown control
@@ -72,47 +57,47 @@ namespace DynamicDataGrid
             //}
         }
 
-        private void DynamicDataGrid_OnAutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
-        {
-            var propertyDescriptor = (PropertyDescriptor)e.PropertyDescriptor;
-            var dataBoundColumn = (DataGridBoundColumn)e.Column;
+        //private void DynamicDataGrid_OnAutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
+        //{
+        //    var propertyDescriptor = (PropertyDescriptor)e.PropertyDescriptor;
+        //    var dataBoundColumn = (DataGridBoundColumn)e.Column;
 
-            if (propertyDescriptor.PropertyType == typeof(int))
-            {
-                e.Column = new CustomBoundColumn // TODO: value is not updated in DynamicRow
-                {
-                    TemplateName = "IntTemplate",
-                    Header = propertyDescriptor.Name,
-                    Binding = dataBoundColumn.Binding,
-                    IsReadOnly = propertyDescriptor.IsReadOnly
-                };
-            }
-        }
+        //    if (propertyDescriptor.PropertyType == typeof(int))
+        //    {
+        //        e.Column = new CustomBoundColumn // TODO: value is not updated in DynamicRow
+        //        {
+        //            TemplateName = "IntTemplate",
+        //            Header = propertyDescriptor.Name,
+        //            Binding = dataBoundColumn.Binding,
+        //            IsReadOnly = propertyDescriptor.IsReadOnly
+        //        };
+        //    }
+        //}
 
-        public class CustomBoundColumn : DataGridBoundColumn
-        {
-            public string TemplateName { get; set; }
+        //public class CustomBoundColumn : DataGridBoundColumn
+        //{
+        //    public string TemplateName { get; set; }
 
-            protected override FrameworkElement GenerateElement(DataGridCell cell, object dataItem)
-            {
-                var binding = new Binding(((Binding)Binding).Path.Path)
-                {
-                    Source = dataItem,
-                    Mode =  BindingMode.TwoWay
-                };
+        //    protected override FrameworkElement GenerateElement(DataGridCell cell, object dataItem)
+        //    {
+        //        var binding = new Binding(((Binding)Binding).Path.Path)
+        //        {
+        //            Source = dataItem,
+        //            Mode =  BindingMode.TwoWay
+        //        };
 
-                var content = new ContentControl
-                {
-                    ContentTemplate = (DataTemplate) cell.FindResource(TemplateName)
-                };
-                content.SetBinding(ContentControl.ContentProperty, binding);
-                return content;
-            }
+        //        var content = new ContentControl
+        //        {
+        //            ContentTemplate = (DataTemplate) cell.FindResource(TemplateName)
+        //        };
+        //        content.SetBinding(ContentControl.ContentProperty, binding);
+        //        return content;
+        //    }
 
-            protected override FrameworkElement GenerateEditingElement(DataGridCell cell, object dataItem)
-            {
-                return GenerateElement(cell, dataItem);
-            }
-        }
+        //    protected override FrameworkElement GenerateEditingElement(DataGridCell cell, object dataItem)
+        //    {
+        //        return GenerateElement(cell, dataItem);
+        //    }
+        //}
     }
 }

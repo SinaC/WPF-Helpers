@@ -10,13 +10,21 @@ namespace DynamicDataGrid.DynamicGrid
         private readonly string _displayName;
         private readonly Type _dynamicType;
         private readonly bool _isReadOnly;
+        private readonly string _dataTemplateName;
 
-        public DynamicPropertyDescriptor(string name, string displayName, Type type, bool isReadOnly = false)
+        public DynamicPropertyDescriptor(string name, string displayName, Type type, bool isReadOnly = false, string dataTemplateName = null)
             : base(name, null)
         {
             _displayName = displayName;
             _dynamicType = type;
             _isReadOnly = isReadOnly;
+            _dataTemplateName = dataTemplateName;
+        }
+
+        // TODO: use this in code behind
+        public string DataTemplateName
+        {
+            get { return _dataTemplateName; }
         }
 
         public override bool CanResetValue(object component)

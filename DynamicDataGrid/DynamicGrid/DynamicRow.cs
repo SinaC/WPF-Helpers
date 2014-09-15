@@ -63,57 +63,57 @@ namespace DynamicDataGrid.DynamicGrid
             return false;
         }
 
-        public override bool TrySetMember(SetMemberBinder binder, object value)
+        public bool TrySetProperty(string propertyName, object value)
         {
             // TODO: type checking
-            if (_dynamicProperties.ContainsKey(binder.Name))
+            if (!_dynamicProperties.ContainsKey(propertyName))
+                return false;
+            if (_dynamicProperties[propertyName].GetType() != value.GetType())
             {
-                if (_dynamicProperties[binder.Name].GetType() != value.GetType())
+                TypeConverter converter = TypeDescriptor.GetConverter(_dynamicProperties[propertyName].GetType());
+                try
                 {
-                    TypeConverter converter = TypeDescriptor.GetConverter(_dynamicProperties[binder.Name].GetType());
-                    try
-                    {
-                        object converted = converter.ConvertFrom(value);
-                        _dynamicProperties[binder.Name] = converted;
-                        //_dynamicValidities[binder.Name] = true;
-                        OnPropertyChanged(binder.Name);
-                    }
+                    object converted = converter.ConvertFrom(value);
+                    _dynamicProperties[propertyName] = converted;
+                    //_dynamicValidities[propertyName] = true;
+                    OnPropertyChanged(propertyName);
+                }
                     // TODO: should notify row error provider
-                    catch (FormatException ex)
-                    {
-                        //_dynamicValidities[binder.Name] = false;
-                        OnPropertyChanged(binder.Name);
-                        return false;
-                    }
-                    catch (Exception ex)
-                    {
-                        //_dynamicValidities[binder.Name] = false;
-                        OnPropertyChanged(binder.Name);
-                        return false;
-                    }
-                }
-                else
+                catch (FormatException ex)
                 {
-                    _dynamicProperties[binder.Name] = value;
-                    //_dynamicValidities[binder.Name] = true;
-                    OnPropertyChanged(binder.Name);
+                    //_dynamicValidities[propertyName] = false;
+                    OnPropertyChanged(propertyName);
+                    return false;
                 }
-
-                return true;
+                catch (Exception ex)
+                {
+                    //_dynamicValidities[propertyName] = false;
+                    OnPropertyChanged(propertyName);
+                    return false;
+                }
+            }
+            else
+            {
+                _dynamicProperties[propertyName] = value;
+                //_dynamicValidities[propertyName] = true;
+                OnPropertyChanged(propertyName);
             }
 
-            return base.TrySetMember(binder, value);
+            return true;
         }
 
         public override bool TryGetMember(GetMemberBinder binder, out object result)
         {
-            if (_dynamicProperties.ContainsKey(binder.Name))
-            {
-                result = _dynamicProperties[binder.Name];
+            if (TryGetProperty(binder.Name, out result))
                 return true;
-            }
-
             return base.TryGetMember(binder, out result);
+        }
+
+        public override bool TrySetMember(SetMemberBinder binder, object value)
+        {
+            if (TrySetProperty(binder.Name, value))
+                return true;
+            return base.TrySetMember(binder, value);
         }
 
         public override IEnumerable<string> GetDynamicMemberNames()

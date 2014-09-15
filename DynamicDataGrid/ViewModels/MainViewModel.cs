@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Windows.Input;
 using DynamicDataGrid.DynamicGrid;
 
 namespace DynamicDataGrid.ViewModels
@@ -34,6 +35,16 @@ namespace DynamicDataGrid.ViewModels
                     _collection = value;
                     RaisePropertyChanged();
                 }
+            }
+        }
+
+        private ICommand _addRowsCommand;
+        public ICommand AddRowsCommand
+        {
+            get
+            {
+                _addRowsCommand = _addRowsCommand ?? new RelayCommand(AddRows);
+                return _addRowsCommand;
             }
         }
 
@@ -87,6 +98,16 @@ namespace DynamicDataGrid.ViewModels
                 };
 
             Collection = new DynamicGrid<CustomRow, DynamicColumn>(rows, columns);
+        }
+
+        private void AddRows()
+        {
+            CustomRow newRow = new CustomRow();
+            newRow.Status = 4;
+            newRow.TryAddProperty("Foo", "Value4");
+            newRow.TryAddProperty("Bar", false);
+            newRow.TryAddProperty("Order", 4);
+            Collection.AddRow(newRow);
         }
 
         #region INotifyPropertyChanged
