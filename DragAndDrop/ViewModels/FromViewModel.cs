@@ -1,6 +1,6 @@
 ﻿namespace DragAndDrop.ViewModels
 {
-    public class FromViewModel : DragDropViewModelBase, IDragDroppable<string>
+    public class FromViewModel : DragDropViewModelBase
     {
         public FromViewModel(IDragDropActionManager<string> manager)
             : base(manager)
@@ -13,37 +13,37 @@
 
         #region IDragDroppable<string>
 
-        public ItemDragResults IsItemDraggable(string item)
+        public override ItemDragResults IsItemDraggable(string item)
         {
             return ItemDragResults.Allowed;
         }
 
-        public DragResults IsDraggable(IDragDroppable<string> to, string item)
+        public override DragResults IsDraggable(IDragDroppable<string> to, string item)
         {
             return DragResults.DragNoRemove;
         }
 
-        public DropResults IsDroppable(IDragDroppable<string> @from, string item)
+        public override DropResults IsDroppable(IDragDroppable<string> from, string item)
         {
             return DropResults.NoDrop;
         }
 
-        public DoubleClickActions DoubleClickAction(string item)
+        public override DoubleClickActions DoubleClickAction(string item)
         {
-            return DoubleClickActions.Nothing;
+            return DoubleClickActions.DragDrop;
         }
 
-        public IDragDroppable<string> DoubleClickTarget
+        public override IDragDroppable<string> DoubleClickTarget
         {
-            get { return null; }
+            get { return DragDropMapper<string>.GetFromId("To"); }
         }
 
-        public IDragDropActionManager<string> DragDropActionManager
+        public override IDragDropActionManager<string> DragDropActionManager
         {
             get { return Manager; }
         }
 
-        public string Id
+        public override string Id
         {
             get { return "From"; }
         }

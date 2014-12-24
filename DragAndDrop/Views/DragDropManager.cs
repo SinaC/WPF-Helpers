@@ -13,18 +13,21 @@ namespace DragAndDrop.Views
     public class DragDropManager<T> where T : class
     {
         #region Singleton
-        // singleton
+
+        // Singleton
         private DragDropManager()
         {
         }
-        private static DragDropManager<T> _instance;
+        private static readonly Lazy<DragDropManager<T>> Lazy = new Lazy<DragDropManager<T>>(() => new DragDropManager<T>());
         public static DragDropManager<T> Instance
         {
-            get { return _instance ?? (_instance = new DragDropManager<T>()); }
+            get { return Lazy.Value; }
         }
+
         #endregion
 
         #region Drag&Drop datas
+
         private const string DragDataKey = "Item";
 
         private class DragDropData
@@ -36,9 +39,11 @@ namespace DragAndDrop.Views
         private DragDropData _data;
         private Window _topWindow;
         private Point _initialMousePosition;
+
         #endregion
 
         #region Events Handler
+
         // DragSource
         public void DragSource_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
@@ -152,6 +157,7 @@ namespace DragAndDrop.Views
         #endregion
 
         #region Drag&Drop logic
+
         public void PerformDragDrop(IDragDroppable<T> source, IDragDroppable<T> target, T item)
         {
             if (source == null || target == null || item == null)
@@ -232,9 +238,11 @@ namespace DragAndDrop.Views
                 };
             return null;
         }
+
         #endregion
 
         #region VisualTree helpers
+
         internal static IDragDroppable<T> GetDragDroppableObject(object o)
         {
             if (o is DataGrid)
@@ -285,6 +293,7 @@ namespace DragAndDrop.Views
             }
             return null;
         }
+
         #endregion
     }
 

@@ -1,0 +1,114 @@
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:ToleranceSlider="clr-namespace:CustomControls.ToleranceSlider">
+
+    <!-- https://codingsense.wordpress.com/2010/02/01/customize-a-slider-in-wpf-step-by-step-tutorial/ -->
+    <Style x:Key="SliderRepeatButtonStyle" TargetType="{x:Type RepeatButton}">
+        <Setter Property="OverridesDefaultStyle" Value="true"/>
+        <Setter Property="IsTabStop" Value="false"/>
+        <Setter Property="Focusable" Value="false"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type RepeatButton}">
+                    <Rectangle Fill="Transparent"/>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="SliderThumbStyle" TargetType="{x:Type Thumb}">
+        <Setter Property="OverridesDefaultStyle" Value="True"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Thumb}">
+                    <Ellipse Fill="LightGray" Stroke="LightGray" Height="30" Width="30"/>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    
+    <Style TargetType="{x:Type ToleranceSlider:ToleranceSlider}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ToleranceSlider:ToleranceSlider}">
+                    <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*" MinWidth="{TemplateBinding MinWidth}"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto" MinHeight="{TemplateBinding MinHeight}"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <!-- LEFT -->
+                            <!-- MinValue with Tolerance -->
+                            <!-- http://msdn.microsoft.com/en-us/library/ee330302(v=vs.110).aspx -->
+                            <TextBlock Grid.Row="1" Grid.Column="0" 
+                                       HorizontalAlignment="Left" VerticalAlignment="Center"
+                                       Foreground="{TemplateBinding Foreground}"
+                                       Text="{Binding Minimum, RelativeSource={RelativeSource TemplatedParent}}"/>
+
+                            <!-- MIDDLE -->
+                            <!-- TOP -->
+                            <!-- Value without Tolerance -->
+                            <ToleranceSlider:ToleranceTickBar x:Name="ToleranceTick" 
+                                                    Grid.Row="0" Grid.Column="1" 
+                                                    Height="20"
+                                                    Visibility="Visible" Fill="{TemplateBinding Foreground}" 
+                                                    Placement="Top"/>
+                            <!--
+                                MinimumWithoutTolerance="{Binding MinimumWithoutTolerance, RelativeSource={RelativeSource TemplatedParent}}"
+                                MaximumWithoutTolerance="{Binding MaximumWithoutTolerance, RelativeSource={RelativeSource TemplatedParent}}"
+                            -->
+
+                            <!-- CENTER -->
+                            <!-- Middle bar -->
+                            <Border x:Name="PART_MiddleOuterBar" 
+                                    Grid.Row="1" Grid.Column="1" 
+                                    Padding="10,0,10,0" Height="20"
+                                    BorderBrush="Transparent" BorderThickness="0" CornerRadius="10"/>
+                            <Border x:Name="PART_MiddleInnerBar" 
+                                    Grid.Row="1" Grid.Column="1"
+                                    Padding="10,0,10,0" Height="20"
+                                    BorderBrush="Transparent" BorderThickness="0" CornerRadius="10"/>
+
+                            <!-- Repeat button + Thumb + Repeat button -->
+                            <Track x:Name="PART_Track" 
+                                   Grid.Row="1" Grid.Column="1">
+                                <Track.DecreaseRepeatButton>
+                                    <RepeatButton Style="{StaticResource SliderRepeatButtonStyle}" 
+                                                  Command="{x:Static Slider.DecreaseLarge}"/>
+                                </Track.DecreaseRepeatButton>
+                                <Track.IncreaseRepeatButton>
+                                    <RepeatButton Style="{StaticResource SliderRepeatButtonStyle}" 
+                                                  Command="{x:Static Slider.IncreaseLarge}"/>
+                                </Track.IncreaseRepeatButton>
+                                <Track.Thumb>
+                                    <Thumb x:Name="Thumb" Style="{StaticResource SliderThumbStyle}"/>
+                                </Track.Thumb>
+                            </Track>
+                            
+                            <!-- BOTTOM -->
+                            <!-- Bottom ticks (visible) -->
+                            <TickBar x:Name="BottomTick"
+                                     Grid.Row="2" Grid.Column="1"
+                                     Placement="Bottom" Height="4"
+                                     Visibility="Visible" Fill="{TemplateBinding Foreground}" />
+
+                            <!-- RIGHT -->
+                            <!-- MaxValue with Tolerance -->
+                            <TextBlock Grid.Row="1" Grid.Column="2" 
+                                       HorizontalAlignment="Right" VerticalAlignment="Center"
+                                       Foreground="{TemplateBinding Foreground}"
+                                       Text="{Binding Maximum, RelativeSource={RelativeSource TemplatedParent}}"/>
+                        </Grid>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>

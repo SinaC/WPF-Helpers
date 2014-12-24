@@ -21,7 +21,7 @@
             Grid.Column="0"
             DataContext="{Binding FromViewModel}"
             ItemsSource="{Binding Items}"
-            Views:DragDropHandler.DragDrop="{Views:DragDropOptions IsDragSource=True, IsDropTarget=False, DoubleClickable=False, ItemType={x:Type System:String}}">
+            Views:DragDropHandler.DragDrop="{Views:DragDropOptions IsDragSource=True, IsDropTarget=False, DoubleClickable=True, ItemType={x:Type System:String}}">
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
                     <TextBlock Text="{Binding}"/>
@@ -35,7 +35,7 @@
             Grid.Column="1"
             DataContext="{Binding ToViewModel}"
             ItemsSource="{Binding Items}"
-            Views:DragDropHandler.DragDrop="{Views:DragDropOptions IsDragSource=False, IsDropTarget=True, DoubleClickable=False, ItemType={x:Type System:String}}">
+            Views:DragDropHandler.DragDrop="{Views:DragDropOptions IsDragSource=False, IsDropTarget=True, DoubleClickable=True, ItemType={x:Type System:String}}">
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
                     <TextBlock Text="{Binding}"/>

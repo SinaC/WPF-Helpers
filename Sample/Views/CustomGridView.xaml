@@ -4,21 +4,35 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:customControls="clr-namespace:CustomControls;assembly=CustomControls"
+             xmlns:toleranceSlider="clr-namespace:CustomControls.ToleranceSlider;assembly=CustomControls"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
+    <UserControl.Resources>
+        <!--http://stackoverflow.com/questions/338056/resourcedictionary-in-a-separate-assembly-->
+        <ResourceDictionary Source="pack://application:,,,/CustomControls;component/ToleranceSlider/ToleranceSliderStyle.xaml"/>
+    </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <StackPanel Orientation="Horizontal">
+        <StackPanel Grid.Row="0" Orientation="Horizontal">
             <TextBlock Text="{Binding MaxRows}" Margin="0,0,10,0"/>
             <Slider Minimum="1" Maximum="10" Value="{Binding MaxRows}" Width="100"/>
         </StackPanel>
 
+        <toleranceSlider:ToleranceSlider Grid.Row="1" Width="300" Height="80"
+                                         Minimum="80" Maximum="110"
+                                         TickFrequency="5"
+                                         Value="95"
+                                         MinimumWithoutTolerance="90" MaximumWithoutTolerance="100"
+                                         FontSize="18" Foreground="MediumBlue"
+                                         ToleranceColor="Red" NoToleranceColor="Green"/>
+
         <customControls:MaxRowsDataGrid
-                Grid.Row="1"
+                Grid.Row="2"
                 ItemsSource="{Binding Items}"
                 MaxRows="{Binding MaxRows}"
                 AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserResizeRows="False" CanUserSortColumns="False" IsReadOnly="True"

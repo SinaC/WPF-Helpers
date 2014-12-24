@@ -1,6 +1,6 @@
 ﻿namespace DragAndDrop.ViewModels
 {
-    public class ToViewModel : DragDropViewModelBase, IDragDroppable<string>
+    public class ToViewModel : DragDropViewModelBase
     {
         public ToViewModel(IDragDropActionManager<string> manager)
             : base(manager)
@@ -10,37 +10,37 @@
 
         #region IDragDroppable<string>
 
-        public ItemDragResults IsItemDraggable(string item)
+        public override ItemDragResults IsItemDraggable(string item)
         {
-            return ItemDragResults.Denied;
+            return ItemDragResults.Allowed; // needed to allow double click remove
         }
 
-        public DragResults IsDraggable(IDragDroppable<string> to, string item)
+        public override DragResults IsDraggable(IDragDroppable<string> to, string item)
         {
             return DragResults.NoDrag;
         }
 
-        public DropResults IsDroppable(IDragDroppable<string> @from, string item)
+        public override DropResults IsDroppable(IDragDroppable<string> from, string item)
         {
             return DropResults.Drop;
         }
 
-        public DoubleClickActions DoubleClickAction(string item)
+        public override DoubleClickActions DoubleClickAction(string item)
         {
-            return DoubleClickActions.Nothing;
+            return DoubleClickActions.Remove;
         }
 
-        public IDragDroppable<string> DoubleClickTarget
+        public override IDragDroppable<string> DoubleClickTarget
         {
             get { return null; }
         }
 
-        public IDragDropActionManager<string> DragDropActionManager
+        public override IDragDropActionManager<string> DragDropActionManager
         {
             get { return Manager; }
         }
 
-        public string Id
+        public override string Id
         {
             get { return "To"; }
         }
