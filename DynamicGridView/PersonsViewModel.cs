@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 using MVVM;
 
@@ -27,7 +24,7 @@ namespace DynamicGridView
     {
         public PersonsViewModel()
         {
-            this.Persons = new ObservableCollection<Person>
+            Persons = new ObservableCollection<Person>
                 {
                     new Person
                         {
@@ -49,7 +46,7 @@ namespace DynamicGridView
                         }
                 };
 
-            this.Columns = new ObservableCollection<ColumnDescriptor>
+            Columns = new ObservableCollection<ColumnDescriptor>
                 {
                     new ColumnDescriptor
                         {
@@ -78,15 +75,12 @@ namespace DynamicGridView
         {
             get
             {
-                if (_addColumnCommand == null)
-                {
-                    _addColumnCommand = new RelayCommand<string>(
-                        s => this.Columns.Add(new ColumnDescriptor
-                            {
-                                HeaderText = s,
-                                DisplayMember = s
-                            }));
-                }
+                _addColumnCommand = _addColumnCommand ?? new RelayCommand<string>(
+                                                             s => Columns.Add(new ColumnDescriptor
+                                                                 {
+                                                                     HeaderText = s,
+                                                                     DisplayMember = s
+                                                                 }));
                 return _addColumnCommand;
             }
         }
@@ -96,11 +90,8 @@ namespace DynamicGridView
         {
             get
             {
-                if (_removeColumnCommand == null)
-                {
-                    _removeColumnCommand = new RelayCommand<string>(
-                        s => this.Columns.Remove(this.Columns.FirstOrDefault(d => d.DisplayMember == s)));
-                }
+                _removeColumnCommand = _removeColumnCommand ?? new RelayCommand<string>(
+                                                                   s => Columns.Remove(Columns.FirstOrDefault(d => d.DisplayMember == s)));
                 return _removeColumnCommand;
             }
         }
