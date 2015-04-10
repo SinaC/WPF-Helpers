@@ -12,6 +12,7 @@ namespace DynamicGridView
         public string Name { get; set; }
         public string FirstName { get; set; }
         public DateTime DateOfBirth { get; set; }
+        public string Locality { get; set; }
     }
 
     public class ColumnDescriptor
@@ -30,23 +31,26 @@ namespace DynamicGridView
                         {
                             Name = "Doe",
                             FirstName = "John",
-                            DateOfBirth = new DateTime(1981, 9, 12)
+                            DateOfBirth = new DateTime(1981, 9, 12),
+                            Locality = "Bruxelles"
                         },
                     new Person
                         {
                             Name = "Black",
                             FirstName = "Jack",
-                            DateOfBirth = new DateTime(1950, 1, 15)
+                            DateOfBirth = new DateTime(1950, 1, 15),
+                            Locality = "London"
                         },
                     new Person
                         {
                             Name = "Smith",
                             FirstName = "Jane",
-                            DateOfBirth = new DateTime(1987, 7, 23)
+                            DateOfBirth = new DateTime(1987, 7, 23),
+                            Locality = "Paris"
                         }
                 };
 
-            Columns = new ObservableCollection<ColumnDescriptor>
+            AvailableColumns = new ObservableCollection<ColumnDescriptor>
                 {
                     new ColumnDescriptor
                         {
@@ -62,25 +66,35 @@ namespace DynamicGridView
                         {
                             HeaderText = "Date of birth",
                             DisplayMember = "DateOfBirth"
+                        },
+                    new ColumnDescriptor
+                        {
+                            HeaderText = "Locality",
+                            DisplayMember = "Locality"
                         }
+                };
+
+            CurrentColumns = new ObservableCollection<ColumnDescriptor>
+                {
+                    AvailableColumns.FirstOrDefault(x => x.DisplayMember == "Name"),
+                    AvailableColumns.FirstOrDefault(x => x.DisplayMember == "FirstName"),
+                    AvailableColumns.FirstOrDefault(x => x.DisplayMember == "DateOfBirth"),
                 };
         }
 
         public ObservableCollection<Person> Persons { get; private set; }
 
-        public ObservableCollection<ColumnDescriptor> Columns { get; private set; }
+        public ObservableCollection<ColumnDescriptor> CurrentColumns { get; private set; }
+        public ObservableCollection<ColumnDescriptor> AvailableColumns { get; private set; }
+
+        public ColumnDescriptor SelectedColumnDescriptor { get; set; }
 
         private ICommand _addColumnCommand;
         public ICommand AddColumnCommand
         {
             get
             {
-                _addColumnCommand = _addColumnCommand ?? new RelayCommand<string>(
-                                                             s => Columns.Add(new ColumnDescriptor
-                                                                 {
-                                                                     HeaderText = s,
-                                                                     DisplayMember = s
-                                                                 }));
+                _addColumnCommand = _addColumnCommand ?? new RelayCommand<string>(AddColumn);
                 return _addColumnCommand;
             }
         }
@@ -90,10 +104,23 @@ namespace DynamicGridView
         {
             get
             {
-                _removeColumnCommand = _removeColumnCommand ?? new RelayCommand<string>(
-                                                                   s => Columns.Remove(Columns.FirstOrDefault(d => d.DisplayMember == s)));
+                _removeColumnCommand = _removeColumnCommand ?? new RelayCommand<string>(RemoveColumn);
                 return _removeColumnCommand;
             }
+        }
+
+        private void AddColumn(string s)
+        {
+            ColumnDescriptor column = AvailableColumns.FirstOrDefault(x => x.DisplayMember == s);
+            if (column != null)
+                CurrentColumns.Add(column);
+        }
+
+        private void RemoveColumn(string s)
+        {
+            ColumnDescriptor column = AvailableColumns.FirstOrDefault(x => x.DisplayMember == s);
+            if (column != null)
+                CurrentColumns.Remove(column);
         }
     }
 }

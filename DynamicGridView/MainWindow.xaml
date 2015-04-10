@@ -9,11 +9,24 @@
         mc:Ignorable="d">
     <Grid>
         <ListView ItemsSource="{Binding Persons}" Grid.Row="0">
+            <ListView.Resources>
+                <DataTemplate x:Key="ComboBoxHeaderTemplate">
+                    <ComboBox ItemsSource="{Binding DataContext.AvailableColumns, RelativeSource={RelativeSource AncestorType={x:Type ListView}}}"
+                              SelectedItem="{Binding DataContext.SelectedColumnDescriptor, RelativeSource={RelativeSource AncestorType={x:Type ListView}}}">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate DataType="{x:Type local:ColumnDescriptor}">
+                                <TextBlock Text="{Binding HeaderText}"/>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+                </DataTemplate>
+            </ListView.Resources>
             <ListView.View>
                 <GridView 
+                    ColumnHeaderTemplate="{StaticResource ComboBoxHeaderTemplate}"
                     local:GridViewColumnCollection.HeaderTextMember="HeaderText"
                     local:GridViewColumnCollection.DisplayMemberMember="DisplayMember"
-                    local:GridViewColumnCollection.ColumnsSource="{Binding Columns}"/>
+                    local:GridViewColumnCollection.ColumnsSource="{Binding CurrentColumns}"/>
             </ListView.View>
         </ListView>
     </Grid>

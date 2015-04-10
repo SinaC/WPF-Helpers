@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -15,19 +11,19 @@ namespace DynamicGridView
             DependencyProperty.RegisterAttached("ColumnCollectionBehaviour", typeof (GridViewColumnCollectionBehaviour), typeof (GridViewColumnCollection), new UIPropertyMetadata(null));
 
         public static readonly DependencyProperty ColumnsSourceProperty =
-            DependencyProperty.RegisterAttached("ColumnsSource", typeof (object), typeof (GridViewColumnCollection), new UIPropertyMetadata(null, GridViewColumnCollection.ColumnsSourceChanged));
+            DependencyProperty.RegisterAttached("ColumnsSource", typeof (object), typeof (GridViewColumnCollection), new UIPropertyMetadata(null, ColumnsSourceChanged));
 
         public static readonly DependencyProperty DisplayMemberFormatMemberProperty =
-            DependencyProperty.RegisterAttached("DisplayMemberFormatMember", typeof (string), typeof (GridViewColumnCollection), new UIPropertyMetadata(null, GridViewColumnCollection.DisplayMemberFormatMemberChanged));
+            DependencyProperty.RegisterAttached("DisplayMemberFormatMember", typeof (string), typeof (GridViewColumnCollection), new UIPropertyMetadata(null, DisplayMemberFormatMemberChanged));
 
         public static readonly DependencyProperty DisplayMemberMemberProperty =
-            DependencyProperty.RegisterAttached("DisplayMemberMember", typeof (string), typeof (GridViewColumnCollection), new UIPropertyMetadata(null, GridViewColumnCollection.DisplayMemberMemberChanged));
+            DependencyProperty.RegisterAttached("DisplayMemberMember", typeof (string), typeof (GridViewColumnCollection), new UIPropertyMetadata(null, DisplayMemberMemberChanged));
 
         public static readonly DependencyProperty HeaderTextMemberProperty =
-            DependencyProperty.RegisterAttached("HeaderTextMember", typeof (string), typeof (GridViewColumnCollection), new UIPropertyMetadata(null, GridViewColumnCollection.HeaderTextMemberChanged));
+            DependencyProperty.RegisterAttached("HeaderTextMember", typeof (string), typeof (GridViewColumnCollection), new UIPropertyMetadata(null, HeaderTextMemberChanged));
 
         public static readonly DependencyProperty WidthMemberProperty =
-            DependencyProperty.RegisterAttached("WidthMember", typeof (string), typeof (GridViewColumnCollection), new UIPropertyMetadata(null, GridViewColumnCollection.WidthMemberChanged));
+            DependencyProperty.RegisterAttached("WidthMember", typeof (string), typeof (GridViewColumnCollection), new UIPropertyMetadata(null, WidthMemberChanged));
 
         [AttachedPropertyBrowsableForType(typeof (GridView))]
         public static GridViewColumnCollectionBehaviour GetColumnCollectionBehaviour(DependencyObject obj)
@@ -43,7 +39,7 @@ namespace DynamicGridView
         [AttachedPropertyBrowsableForType(typeof (GridView))]
         public static object GetColumnsSource(DependencyObject obj)
         {
-            return (object) obj.GetValue(ColumnsSourceProperty);
+            return obj.GetValue(ColumnsSourceProperty);
         }
 
         public static void SetColumnsSource(DependencyObject obj, object value)
@@ -97,27 +93,27 @@ namespace DynamicGridView
 
         private static void ColumnsSourceChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
         {
-            GridViewColumnCollection.GetOrCreateColumnCollectionBehaviour(sender).ColumnsSource = e.NewValue;
+            GetOrCreateColumnCollectionBehaviour(sender).ColumnsSource = e.NewValue;
         }
 
         private static void DisplayMemberFormatMemberChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
         {
-            GridViewColumnCollection.GetOrCreateColumnCollectionBehaviour(sender).DisplayMemberFormatMember = e.NewValue as string;
+            GetOrCreateColumnCollectionBehaviour(sender).DisplayMemberFormatMember = e.NewValue as string;
         }
 
         private static void DisplayMemberMemberChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
         {
-            GridViewColumnCollection.GetOrCreateColumnCollectionBehaviour(sender).DisplayMemberMember = e.NewValue as string;
+            GetOrCreateColumnCollectionBehaviour(sender).DisplayMemberMember = e.NewValue as string;
         }
 
         private static void HeaderTextMemberChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
         {
-            GridViewColumnCollection.GetOrCreateColumnCollectionBehaviour(sender).HeaderTextMember = e.NewValue as string;
+            GetOrCreateColumnCollectionBehaviour(sender).HeaderTextMember = e.NewValue as string;
         }
 
         private static void WidthMemberChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
         {
-            GridViewColumnCollection.GetOrCreateColumnCollectionBehaviour(sender).WidthMember = e.NewValue as string;
+            GetOrCreateColumnCollectionBehaviour(sender).WidthMember = e.NewValue as string;
         }
 
         private static GridViewColumnCollectionBehaviour GetOrCreateColumnCollectionBehaviour(DependencyObject source)
