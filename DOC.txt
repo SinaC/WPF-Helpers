@@ -1,9 +1,17 @@
 Singleton
 http://csharpindepth.com/Articles/General/Singleton.aspx#lazy
 
-WPF+MVVM+Modals
+WPF+MVVM
 http://stackoverflow.com/questions/3801681/good-or-bad-practice-for-dialogs-in-wpf-with-mvvm
 http://stackoverflow.com/questions/16993433/mvvm-light-wpf-binding-multiple-instances-of-a-window-to-a-viewmodel/16994523#16994523
+
+Modals
+https://github.com/BenjaminGale/ModalContentPresenter
+https://programmingwithpassion.wordpress.com/2012/07/01/displaying-modal-content-in-wpf/
+https://bradleach.wordpress.com/2009/02/25/control-level-modal-dialog/
+http://stackoverflow.com/questions/173652/how-do-i-make-modal-dialog-for-a-page-in-my-wpf-application/173769#173769
+http://stackoverflow.com/questions/429200/wpf-best-way-to-raise-a-popup-window-that-is-modal-to-the-page
+http://deanchalk.azurewebsites.net/wpf-modal-controls-via-dispatcherframe-nested-message-pumps/#more-594
 
 Datagrid dynamic
 http://paulstovell.com/blog/dynamic-datagrid

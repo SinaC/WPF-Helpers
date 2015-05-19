@@ -1,0 +1,18 @@
+﻿<UserControl x:Class="ModalPopupDemo.Views.ChildControl2"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:ViewModels="clr-namespace:ModalPopupDemo.ViewModels" mc:Ignorable="d" 
+             d:DataContext="{d:DesignInstance ViewModels:ViewModel2DesignData, IsDesignTimeCreatable=True}">
+    <StackPanel Orientation="Vertical" Width="150" Height="70">
+        <TextBlock Background="Green" Foreground="Yellow" Text="{Binding Text}"/>
+        <ListView ScrollViewer.VerticalScrollBarVisibility="Visible" Height="50" ItemsSource="{Binding Items}">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Foreground="Orange" Text="{Binding}"/>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </StackPanel>
+</UserControl>

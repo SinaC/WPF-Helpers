@@ -1,0 +1,67 @@
+﻿<Window x:Class="ModalPopupDemo.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:Views="clr-namespace:ModalPopupDemo.Views" 
+        Title="MainWindow" Height="350" Width="525"
+        Background="Cyan">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- active only in cyan panel -->
+        <Views:PopupService Grid.Column="0" x:Name="PopupService"/>
+
+        <Grid Grid.Column="0">
+            <!--IsEnabled="{Binding NoPopupDisplayed, ElementName=PopupService}"-->
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <TextBox Grid.Row="0" Margin="10"/>
+            
+            <ComboBox Grid.Row="1" Margin="10">
+                <ComboBoxItem Content="Item 1"/>
+                <ComboBoxItem Content="Item 2"/>
+                <ComboBoxItem Content="Item 3"/>
+            </ComboBox>
+            
+            <ListView Grid.Row="2" MaxHeight="50" ScrollViewer.VerticalScrollBarVisibility="Visible" Margin="10">
+                <ListViewItem Content="Item 1"/>
+                <ListViewItem Content="Item 2"/>
+                <ListViewItem Content="Item 3"/>
+                <ListViewItem Content="Item 4"/>
+                <ListViewItem Content="Item 5"/>
+                <ListViewItem Content="Item 6"/>
+                <ListViewItem Content="Item 7"/>
+                <ListViewItem Content="Item 8"/>
+            </ListView>
+        </Grid>
+
+        <Grid Grid.Column="1" Background="DarkGray">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <StackPanel Grid.Row="0" Orientation="Vertical">
+                <Button Width="100" Height="30" HorizontalAlignment="Right" VerticalAlignment="Top" Content="Open Messages"
+                        Click="ButtonOpenMessages_OnClick"/>
+                <Button Width="100" Height="30" HorizontalAlignment="Right" VerticalAlignment="Top" Content="Open Modal"
+                        Click="ButtonOpenModal_OnClick"/>
+                <Button Width="100" Height="30" HorizontalAlignment="Right" VerticalAlignment="Top" Content="Open Question"
+                        Click="ButtonOpenQuestion_OnClick"/>
+            </StackPanel>
+            <StackPanel Grid.Row="1" Orientation="Vertical">
+                <Button Width="100" Height="30" HorizontalAlignment="Right" VerticalAlignment="Top" Content="Move"
+                        Click="ButtonMove_OnClick"/>
+                <Button Width="100" Height="30" HorizontalAlignment="Right" VerticalAlignment="Top" Content="Close"
+                        Click="ButtonClose_OnClick"/>
+            </StackPanel>
+        </Grid>
+    </Grid>
+
+</Window>

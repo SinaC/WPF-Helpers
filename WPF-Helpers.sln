@@ -18,6 +18,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DynamicGridView", "DynamicGridView\DynamicGridView.csproj", "{7183D7C8-F2CC-447C-B634-1D30BE644EBD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModalPopupDemo", "ModalPopupDemo\ModalPopupDemo.csproj", "{DC2C92B2-8265-4EF4-A8D8-4ACE7CB454F0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -48,6 +50,10 @@ Global
 		{7183D7C8-F2CC-447C-B634-1D30BE644EBD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7183D7C8-F2CC-447C-B634-1D30BE644EBD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7183D7C8-F2CC-447C-B634-1D30BE644EBD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DC2C92B2-8265-4EF4-A8D8-4ACE7CB454F0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DC2C92B2-8265-4EF4-A8D8-4ACE7CB454F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DC2C92B2-8265-4EF4-A8D8-4ACE7CB454F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DC2C92B2-8265-4EF4-A8D8-4ACE7CB454F0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
