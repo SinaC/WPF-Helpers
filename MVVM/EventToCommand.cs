@@ -1,7 +1,4 @@
-﻿using System.Windows;
-using System.Windows.Input;
-
-namespace MVVM
+﻿namespace MVVM
 {
     public class EventToCommand
     {

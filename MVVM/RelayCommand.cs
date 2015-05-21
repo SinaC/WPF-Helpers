@@ -1,7 +1,4 @@
-﻿using System;
-using System.Windows.Input;
-
-namespace MVVM
+﻿namespace MVVM
 {
     public class RelayCommand<T> : ICommand
     {
