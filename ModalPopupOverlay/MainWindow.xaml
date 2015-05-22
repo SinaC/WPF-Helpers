@@ -1,0 +1,64 @@
+﻿<Window x:Class="ModalPopupOverlay.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:ModalPopupOverlay="clr-namespace:ModalPopupOverlay"
+        xmlns:ViewModels="clr-namespace:ModalPopupOverlay.ViewModels"
+        mc:Ignorable="d" 
+        d:DataContext="{d:DesignInstance ViewModels:MainViewModelDesignData, IsDesignTimeCreatable=True}"
+        Title="MainWindow" 
+        Height="400" Width="400">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+        
+        <ModalPopupOverlay:ModalPopupPresenter Grid.Column="0" x:Name="ModalPopupPresenter" OverlayBrush="Transparent">
+            <Border Background="Green" Width="200" Height="200">
+                <StackPanel Orientation="Vertical">
+                    <TextBlock Text="Main"/>
+                    <TextBox Width="100" Height="30" Margin="5"/>
+                    <ListView Height="50" Margin="5" ScrollViewer.VerticalScrollBarVisibility="Visible">
+                        <ListViewItem Content="Item 1"/>
+                        <ListViewItem Content="Item 2"/>
+                        <ListViewItem Content="Item 3"/>
+                        <ListViewItem Content="Item 4"/>
+                        <ListViewItem Content="Item 5"/>
+                        <ListViewItem Content="Item 6"/>
+                        <ListViewItem Content="Item 7"/>
+                    </ListView>
+                </StackPanel>
+            </Border>
+        </ModalPopupOverlay:ModalPopupPresenter>
+
+        <StackPanel Grid.Column="1" Orientation="Vertical">
+            <GroupBox Header="Code behind">
+                <StackPanel>
+                    <Button Content="Show Messages"
+                            Click="ShowMessagesButton_Click"/>
+                    <Button Content="Show Modal"
+                            Click="ShowModalButton_Click"/>
+                    <Button Content="Show Question"
+                            Click="ShowQuestionButton_Click"/>
+                    <Button Content="Close Popup"
+                            Click="CloseButton_Click"/>
+                </StackPanel>
+            </GroupBox>
+
+            <GroupBox Header="ViewModel">
+                <StackPanel>
+                    <Button Content="Show Messages"
+                            Command="{Binding ShowMessagesCommand}"/>
+                    <Button Content="Show Modal"
+                            Command="{Binding ShowModalCommand}"/>
+                    <Button Content="Show Question"
+                            Command="{Binding ShowQuestionCommand}"/>
+                    <Button Content="Close Popup"
+                            Command="{Binding CloseCommand}"/>
+                </StackPanel>
+            </GroupBox>
+        </StackPanel>
+    </Grid>
+</Window>
