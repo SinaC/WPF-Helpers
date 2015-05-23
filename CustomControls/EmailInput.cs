@@ -7,7 +7,7 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Media;
 
-namespace NAllo.Arche.UI.Views.Common
+namespace CustomControls
 {
     // Editable combobox with preselected domain list displayed when dropdown is opened
     public class EmailInput : ComboBox

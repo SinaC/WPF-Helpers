@@ -10,9 +10,9 @@ using System.Windows;
 [assembly: AssemblyTitle("DragAndDrop")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("N-ALLO")]
+[assembly: AssemblyCompany("SinaC")]
 [assembly: AssemblyProduct("DragAndDrop")]
-[assembly: AssemblyCopyright("Copyright © N-ALLO 2013")]
+[assembly: AssemblyCopyright("Copyright © SinaC 2013")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

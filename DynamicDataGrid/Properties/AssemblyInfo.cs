@@ -10,9 +10,9 @@ using System.Windows;
 [assembly: AssemblyTitle("DynamicDataGrid")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("SinaC")]
 [assembly: AssemblyProduct("DynamicDataGrid")]
-[assembly: AssemblyCopyright("Copyright ©  2014")]
+[assembly: AssemblyCopyright("Copyright © SinaC 2014")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

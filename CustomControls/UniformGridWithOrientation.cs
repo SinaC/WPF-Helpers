@@ -2,7 +2,7 @@
 using System.Windows;
 using System.Windows.Controls.Primitives;
 
-namespace NAllo.Arche.UI.Views.Common
+namespace CustomControls
 {
     //https://social.msdn.microsoft.com/Forums/vstudio/en-US/104b9cb8-3e1a-4e2e-ac62-4f9b32cc21f0/layout-orientation-of-uniformgrid?forum=wpf
     public class UniformGridWithOrientation : UniformGrid

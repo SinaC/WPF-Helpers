@@ -7,6 +7,7 @@ namespace ModalPopupOverlay
     /// </summary>
     public partial class QuestionPopup : UserControl
     {
+        // Will be used as content of ModalPopup
         public QuestionPopup()
         {
             InitializeComponent();

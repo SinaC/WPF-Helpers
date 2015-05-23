@@ -10,9 +10,9 @@ using System.Windows;
 [assembly: AssemblyTitle("ModalPopupOverlay")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("N-ALLO")]
+[assembly: AssemblyCompany("SinaC")]
 [assembly: AssemblyProduct("ModalPopupOverlay")]
-[assembly: AssemblyCopyright("Copyright © N-ALLO 2015")]
+[assembly: AssemblyCopyright("Copyright © SinaC 2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

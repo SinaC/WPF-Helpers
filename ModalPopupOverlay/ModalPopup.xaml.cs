@@ -14,21 +14,7 @@ namespace ModalPopupOverlay
     /// </summary>
     public partial class ModalPopup : UserControl, INotifyPropertyChanged, IPopup, ISaveNavigationAndFocusPopup
     {
-        #region IPopup
-
-        public Guid Guid { get; private set; }
-
-        #endregion
-
-        #region IOverlayedPopup
-
-        public KeyboardNavigationMode SavedTabNavigationMode { get; set; }
-
-        public KeyboardNavigationMode SavedDirectionalNavigationMode { get; set; }
-
-        public IInputElement SavedFocusedElement { get; set; }
-
-        #endregion
+        private IPopupService _popupService;
 
         private string _title;
         public string Title
@@ -44,8 +30,29 @@ namespace ModalPopupOverlay
             }
         }
 
-        private IPopupService _popupService;
+        #region IPopup
 
+        public Guid Guid { get; private set; }
+
+        public void Close()
+        {
+            IPopupService popupService = _popupService ?? VisualHelper.FindParent<IPopupService>(this);
+            if (popupService != null)
+                popupService.Close(this as IPopup);
+        }
+
+        #endregion
+
+        #region ISaveNavigationAndFocusPopup
+
+        public KeyboardNavigationMode SavedTabNavigationMode { get; set; }
+
+        public KeyboardNavigationMode SavedDirectionalNavigationMode { get; set; }
+
+        public IInputElement SavedFocusedElement { get; set; }
+
+        #endregion
+        
         public ModalPopup()
         {
             InitializeComponent();
@@ -61,30 +68,15 @@ namespace ModalPopupOverlay
 
         private void OnLoaded(object sender, RoutedEventArgs routedEventArgs)
         {
-            _popupService = FindParent<IPopupService>(this);
+            _popupService = VisualHelper.FindParent<IPopupService>(this);
         }
 
         private void Thumb_OnDragDelta(object sender, DragDeltaEventArgs e)
         {
             // Search popup service in parent
-            IPopupService popupService = _popupService ?? FindParent<IPopupService>(this);
+            IPopupService popupService = _popupService ?? VisualHelper.FindParent<IPopupService>(this);
             if (popupService != null)
                 popupService.Move(this, e.HorizontalChange, e.VerticalChange);
-        }
-
-        private static T FindParent<T>(DependencyObject child)
-            where T:class
-        {
-            //get parent item
-            DependencyObject parentObject = VisualTreeHelper.GetParent(child);
-
-            //we've reached the end of the tree
-            if (parentObject == null) 
-                return default(T);
-
-            //check if the parent matches the type we're looking for
-            T parent = parentObject as T;
-            return parent ?? FindParent<T>(parentObject);
         }
 
         #region INotifyPropertyChanged

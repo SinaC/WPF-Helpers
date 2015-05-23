@@ -2,7 +2,7 @@
 using System.Windows.Controls;
 using System.Windows.Media;
 
-namespace NAllo.Arche.UI.Views.Common
+namespace CustomControls
 {
     public class FreeFormContentControl : ContentControl
     {
