@@ -1,0 +1,90 @@
+﻿<UserControl x:Class="SampleWPF.Views.MainTabControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:searchClientViews="clr-namespace:SampleWPF.Views.SearchClient" 
+             xmlns:createClientViews="clr-namespace:SampleWPF.Views.CreateClient"
+             xmlns:displayClientViews="clr-namespace:SampleWPF.Views.DisplayClient"
+             xmlns:viewModels="clr-namespace:SampleWPF.ViewModels"
+             xmlns:searchClientViewModels="clr-namespace:SampleWPF.ViewModels.SearchClient" 
+             xmlns:createClientViewModels="clr-namespace:SampleWPF.ViewModels.CreateClient" 
+             xmlns:displayClientViewModels="clr-namespace:SampleWPF.ViewModels.DisplayClient"
+             xmlns:alertsManagerViews="clr-namespace:SampleWPF.Views.AlertsManager" mc:Ignorable="d" 
+             d:DataContext="{d:DesignInstance viewModels:MainTabControlViewModelDesignData, IsDesignTimeCreatable=True}"
+             d:DesignHeight="300" d:DesignWidth="600">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary>
+                    <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+                </ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>
+            <DataTemplate DataType="{x:Type searchClientViewModels:SearchClientTabViewModel}">
+                <searchClientViews:SearchClientTab />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type createClientViewModels:CreateClientTabViewModel}">
+                <createClientViews:CreateClientTab />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type displayClientViewModels:DisplayClientTabViewModel}">
+                <displayClientViews:DisplayClientTab />
+            </DataTemplate>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <TabControl TabStripPlacement="Top" VerticalContentAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Stretch" HorizontalAlignment="Stretch"
+                ItemsSource="{Binding Tabs}"
+                SelectedItem="{Binding SelectedTab}">
+        <TabControl.ContentTemplate>
+            <DataTemplate>
+                <!-- 
+                    Alerts Manager is displayed on bottom row when shrunk 
+                    and in both rows (aligned on bottom) when expanded
+                    ==> bottom row must have a fixed height to disable row merge when expanded
+                -->
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="24"/> <!-- MUST BE A FIXED SIZE -->
+                    </Grid.RowDefinitions>
+                    <Border Grid.Row="0" Grid.RowSpan="1" BorderBrush="Violet" BorderThickness="1">
+                        <ContentControl HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                                        Content="{Binding}"/>
+                    </Border>
+                    <alertsManagerViews:AlertsManager VerticalAlignment="Bottom" HorizontalAlignment="Stretch"
+                                                      DataContext="{Binding AlertsManager}">
+                        <alertsManagerViews:AlertsManager.Style>
+                            <Style TargetType="{x:Type alertsManagerViews:AlertsManager}">
+                                <Setter Property="Grid.Row" Value="1"/>
+                                <Setter Property="Grid.RowSpan" Value="1"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding IsExpanded}" Value="True">
+                                        <Setter Property="Grid.Row" Value="0"/>
+                                        <Setter Property="Grid.RowSpan" Value="2"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </alertsManagerViews:AlertsManager.Style>
+                    </alertsManagerViews:AlertsManager>
+                </Grid>
+            </DataTemplate>
+        </TabControl.ContentTemplate>
+        <TabControl.ItemTemplate>
+            <DataTemplate>
+                <Grid Height="20">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" VerticalAlignment="Center" Margin="0,0,10,0" 
+                               Text="{Binding Title}"/>
+                    <Button Grid.Column="1" Width="20" Height="20"
+                            Command="{Binding DataContext.CloseTabCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
+                            CommandParameter="{Binding}"
+                            Visibility="{Binding IsTabClosable, Converter={StaticResource BooleanToVisibilityConverter}}">
+                        <TextBlock Text="X"/>
+                    </Button>
+                </Grid>
+            </DataTemplate>
+        </TabControl.ItemTemplate>
+    </TabControl>
+</UserControl>

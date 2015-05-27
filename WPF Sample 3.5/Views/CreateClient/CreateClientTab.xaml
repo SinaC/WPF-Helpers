@@ -1,0 +1,44 @@
+﻿<UserControl x:Class="SampleWPF.Views.CreateClient.CreateClientTab"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:createClientViewModels="clr-namespace:SampleWPF.ViewModels.CreateClient"
+             xmlns:requestDetailViews="clr-namespace:SampleWPF.Views.RequestDetail"
+             d:DataContext="{d:DesignInstance createClientViewModels:CreateClientTabViewModelDesignData, IsDesignTimeCreatable=True}"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Border Grid.Row="0" Height="97">
+            <TextBlock Text="Champs de création + boutons"/>
+        </Border>
+
+        <TextBox Grid.Row="1"
+                 Text="{Binding ClientId}"/>
+        
+        <Button Grid.Row="2" VerticalAlignment="Top" Height="30"
+                Command="{Binding CreateClientCommand}">
+            <TextBlock Text="Créer client"/>
+        </Button>
+
+        <requestDetailViews:RequestDetail Grid.Row="0" HorizontalAlignment="Right" Width="120"
+                                          DataContext="{Binding RequestDetailViewModel}">
+            <requestDetailViews:RequestDetail.Style>
+                <Style TargetType="{x:Type requestDetailViews:RequestDetail}">
+                    <Setter Property="Grid.RowSpan" Value="1"/>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding IsExpanded}" Value="True">
+                            <Setter Property="Grid.RowSpan" Value="3"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </requestDetailViews:RequestDetail.Style>
+        </requestDetailViews:RequestDetail>
+    </Grid>
+</UserControl>

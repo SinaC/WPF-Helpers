@@ -22,6 +22,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModalPopupDemo", "ModalPopu
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModalPopupOverlay", "ModalPopupOverlay\ModalPopupOverlay.csproj", "{A84032A2-FF7C-4210-97B9-B83837512A89}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sample WPF", "WPF Sample 3.5\Sample WPF.csproj", "{9F5F7B12-7894-44C0-BE88-113D515A536D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -60,6 +62,10 @@ Global
 		{A84032A2-FF7C-4210-97B9-B83837512A89}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A84032A2-FF7C-4210-97B9-B83837512A89}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A84032A2-FF7C-4210-97B9-B83837512A89}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9F5F7B12-7894-44C0-BE88-113D515A536D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9F5F7B12-7894-44C0-BE88-113D515A536D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9F5F7B12-7894-44C0-BE88-113D515A536D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9F5F7B12-7894-44C0-BE88-113D515A536D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

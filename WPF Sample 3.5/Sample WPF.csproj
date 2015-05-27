@@ -1,0 +1,246 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{9F5F7B12-7894-44C0-BE88-113D515A536D}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>SampleWPF</RootNamespace>
+    <AssemblyName>SampleWPF</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>SampleWPF.App</StartupObject>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Core" />
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Agents\CompositeAgent.cs" />
+    <Compile Include="Agents\ICompositionQuery.cs" />
+    <Compile Include="App.cs" />
+    <Compile Include="Cache\ClientCache.cs" />
+    <Compile Include="Cache\GlobalCache.cs" />
+    <Compile Include="Core\Commands\AsyncProcessorCommand.cs" />
+    <Compile Include="Core\Commands\AsyncRelayCommand.cs" />
+    <Compile Include="Core\Commands\ProcessorCommand.cs" />
+    <Compile Include="Core\DispatcherHelper.cs" />
+    <Compile Include="Core\Processors\ProcessorStatus.cs" />
+    <Compile Include="Core\UIRepository.cs" />
+    <Compile Include="DataContracts\AlertData.cs" />
+    <Compile Include="DataContracts\RequestBase.cs" />
+    <Compile Include="DataContracts\ResponseBase.cs" />
+    <Compile Include="Utility\Interfaces\ICacheAdmin.cs" />
+    <Compile Include="Utility\Interfaces\IGlobalCache.cs" />
+    <Compile Include="Models\SessionData.cs" />
+    <Compile Include="Core\Interfaces\IServerCallBase.cs" />
+    <Compile Include="Core\Processors\ProcessorBase.cs" />
+    <Compile Include="Core\ServerCalls\ServerCallBase.cs" />
+    <Compile Include="Core\ServerCalls\ServerCallClientCacheBase.cs" />
+    <Compile Include="Core\ServerCalls\ServerCallCollection.cs" />
+    <Compile Include="Core\ServerCalls\ServerCallGlobalCacheBase.cs" />
+    <Compile Include="Core\ServerCalls\ServerCallNoCacheBase.cs" />
+    <Compile Include="Core\ServerCalls\ServerCallProcessor.cs" />
+    <Compile Include="Splasher.cs" />
+    <Compile Include="Utility\Repository.cs" />
+    <Compile Include="DataContracts\ClientData.cs" />
+    <Compile Include="Utility\Interfaces\IClientCache.cs" />
+    <Compile Include="Core\Interfaces\IPopup.cs" />
+    <Compile Include="Core\Interfaces\IPopupService.cs" />
+    <Compile Include="Core\Commands\RelayCommand.cs" />
+    <Compile Include="Core\Interfaces\IAlertsManager.cs" />
+    <Compile Include="Utility\Interfaces\IClientManager.cs" />
+    <Compile Include="Utility\Logger.cs" />
+    <Compile Include="Models\RequestDetailData.cs" />
+    <Compile Include="Utility\Settings.cs" />
+    <Compile Include="ViewModels\AlertsManager\AlertItem.cs" />
+    <Compile Include="Core\MVVM\ObservableObject.cs" />
+    <Compile Include="ViewModels\AlertsManager\AlertsManagerViewModel.cs" />
+    <Compile Include="ViewModels\CreateClient\CreateClientTabViewModel.cs" />
+    <Compile Include="ViewModels\DisplayClient\DisplayClientTabViewModel.cs" />
+    <Compile Include="ViewModels\Header\MainHeaderViewModel.cs" />
+    <Compile Include="ViewModels\Login\LoginViewModel.cs" />
+    <Compile Include="ViewModels\MainTabBaseViewModel.cs" />
+    <Compile Include="ViewModels\MainTabControlViewModel.cs" />
+    <Compile Include="ViewModels\MainViewModel.cs" />
+    <Compile Include="ViewModels\Popups\MessagePopupViewModel.cs" />
+    <Compile Include="ViewModels\Popups\QuestionPopupAnswerItem.cs" />
+    <Compile Include="ViewModels\Popups\QuestionPopupViewModel.cs" />
+    <Compile Include="ViewModels\RequestDetails\RequestDetailViewModel.cs" />
+    <Compile Include="ViewModels\SearchClient\SearchClientTabViewModel.cs" />
+    <Compile Include="Core\MVVM\ViewModelBase.cs" />
+    <Compile Include="Views\AlertsManager\AlertsManager.xaml.cs">
+      <DependentUpon>AlertsManager.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\CreateClient\CreateClientTab.xaml.cs">
+      <DependentUpon>CreateClientTab.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\DisplayClient\DisplayClientTab.xaml.cs">
+      <DependentUpon>DisplayClientTab.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Header\MainHeader.xaml.cs">
+      <DependentUpon>MainHeader.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Login\Login.xaml.cs">
+      <DependentUpon>Login.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MainTabControl.xaml.cs">
+      <DependentUpon>MainTabControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Popups\ISaveNavigationAndFocusPopup.cs" />
+    <Compile Include="Views\Popups\MessagePopup.xaml.cs">
+      <DependentUpon>MessagePopup.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Popups\ModalPopup.xaml.cs">
+      <DependentUpon>ModalPopup.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Popups\ModalPopupPresenter.cs" />
+    <Compile Include="Views\Popups\QuestionPopup.xaml.cs">
+      <DependentUpon>QuestionPopup.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\RequestDetail\RequestDetail.xaml.cs">
+      <DependentUpon>RequestDetail.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SearchClient\SearchClientTab.xaml.cs">
+      <DependentUpon>SearchClientTab.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SplashScreen\SplashScreen.xaml.cs">
+      <DependentUpon>SplashScreen.xaml</DependentUpon>
+    </Compile>
+    <Page Include="Views\AlertsManager\AlertsManager.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\CreateClient\CreateClientTab.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\DisplayClient\DisplayClientTab.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Header\MainHeader.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Login\Login.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\MainTabControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="Views\MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Page Include="Views\Popups\MessagePopup.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Popups\ModalPopup.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Popups\QuestionPopup.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\RequestDetail\RequestDetail.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SearchClient\SearchClientTab.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SplashScreen\SplashScreen.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <AppDesigner Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="ViewModels\DisplayClient\DeliveryPoints\" />
+    <Folder Include="ViewModels\DisplayClient\IntranetDolceVita\" />
+    <Folder Include="ViewModels\DisplayClient\Invoice\" />
+    <Folder Include="ViewModels\DisplayClient\MiddlePanel\" />
+    <Folder Include="ViewModels\DisplayClient\Sales\" />
+    <Folder Include="ViewModels\DisplayClient\Summary\" />
+    <Folder Include="ViewModels\DisplayClient\TAF\" />
+    <Folder Include="ViewModels\DisplayClient\Termination\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

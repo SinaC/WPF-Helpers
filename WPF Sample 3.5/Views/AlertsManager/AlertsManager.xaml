@@ -1,0 +1,51 @@
+﻿<UserControl x:Class="SampleWPF.Views.AlertsManager.AlertsManager"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:alertsManagerViewModels="clr-namespace:SampleWPF.ViewModels.AlertsManager"
+             d:DataContext="{d:DesignInstance alertsManagerViewModels:AlertsManagerViewModelDesignData, IsDesignTimeCreatable=True}"
+             mc:Ignorable="d">
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        
+        <Button Command="{Binding ToggleCommand}">
+            <StackPanel Grid.Row="0" Orientation="Horizontal">
+                <TextBlock Foreground="LightGray" Text="{Binding InfoCount, StringFormat={}Info: {0}}" Margin="0,0,2,0"/>
+                <TextBlock Foreground="Orange" Text="{Binding WarningCount, StringFormat={}Warning: {0}}" Margin="2,0,2,0"/>
+                <TextBlock Foreground="Red" Text="{Binding ErrorCount, StringFormat={}Error: {0}}" Margin="2,0,0,0"/>
+            </StackPanel>
+        </Button>
+        <ItemsControl Grid.Row="1"
+                      ItemsSource="{Binding Alerts}"
+                      Visibility="{Binding IsExpanded, Converter={StaticResource BooleanToVisibilityConverter}}">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding Title}">
+                        <TextBlock.Style>
+                            <Style TargetType="{x:Type TextBlock}">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Type}" Value="{x:Static alertsManagerViewModels:AlertItemTypes.Error}">
+                                        <Setter Property="Background" Value="Red"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Type}" Value="{x:Static alertsManagerViewModels:AlertItemTypes.Warning}">
+                                        <Setter Property="Background" Value="Orange"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Type}" Value="{x:Static alertsManagerViewModels:AlertItemTypes.Info}">
+                                        <Setter Property="Background" Value="LightGray"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+    </Grid>
+</UserControl>
