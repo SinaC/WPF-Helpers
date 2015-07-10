@@ -1,0 +1,20 @@
+﻿<UserControl x:Class="Sample.Views.TestView2"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:CustomControls="clr-namespace:CustomControls;assembly=CustomControls" 
+             d:DesignWidth="500" d:DesignHeight="300"
+             mc:Ignorable="d">
+    <Grid>
+        <!--<CustomControls:BalloonWithHeaderContentControl CornerRadius="5" ArrowSize="10" ArrowPosition="0.7" Stroke="Blue" StrokeThickness="1" Fill="Pink" Position="Bottom">
+            <TextBlock Text="TSEKWA" Foreground="Yellow" Background="Green" Width="100" Height="50"/>
+            <CustomControls:BalloonWithHeaderContentControl.Header>
+                <TextBlock Foreground="Green" Background="Yellow" Text="Header"/>
+            </CustomControls:BalloonWithHeaderContentControl.Header>
+        </CustomControls:BalloonWithHeaderContentControl>-->
+        <CustomControls:BalloonContentControl CornerRadius="5" ArrowSize="10" ArrowPosition="0.7" Stroke="Blue" StrokeThickness="1" Fill="Pink" Position="Bottom">
+            <TextBlock Text="TSEKWA" Foreground="Yellow" Background="Green" Width="100" Height="50"/>
+        </CustomControls:BalloonContentControl>
+    </Grid>
+</UserControl>

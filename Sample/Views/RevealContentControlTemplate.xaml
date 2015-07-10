@@ -1,0 +1,94 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib"
+                    xmlns:CustomControls="clr-namespace:CustomControls;assembly=CustomControls">
+    <CustomControls:MultiplyConverter x:Key="MultiplyConverter" />
+    <!--<ControlTemplate x:Key="RevealContentControlTemplate" TargetType="{x:Type ContentControl}">
+        <ScrollViewer x:Name="RevealContentScrollView" DockPanel.Dock="Bottom"
+                      HorizontalScrollBarVisibility="Hidden"
+                      VerticalScrollBarVisibility="Hidden"
+                      HorizontalContentAlignment="Stretch"
+                      VerticalContentAlignment="Bottom">
+            <ScrollViewer.Tag>
+                <sys:Double>0.0</sys:Double>
+            </ScrollViewer.Tag>
+            <ScrollViewer.Height>
+                <MultiBinding Converter="{StaticResource MultiplyConverter}">
+                    <Binding Path="ActualHeight" ElementName="RevealContent"/>
+                    <Binding Path="Tag" RelativeSource="{RelativeSource Self}" />
+                </MultiBinding>
+            </ScrollViewer.Height>
+            <ContentPresenter x:Name="RevealContent" ContentSource="Content"/>
+        </ScrollViewer>
+        <ControlTemplate.Triggers>
+            <DataTrigger Binding="{Binding Visibility, ElementName=RevealContent}" Value="Visible">
+                <DataTrigger.EnterActions>
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <DoubleAnimation 
+                                Storyboard.TargetName="RevealContentScrollView"
+                                Storyboard.TargetProperty="Tag"
+                                To="1"
+                                Duration="0:0:1.0"/>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </DataTrigger.EnterActions>
+                <DataTrigger.ExitActions>
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <DoubleAnimation 
+                                Storyboard.TargetName="RevealContentScrollView"
+                                Storyboard.TargetProperty="Tag"
+                                To="0"
+                                Duration="0:0:1.0"/>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </DataTrigger.ExitActions>
+            </DataTrigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>-->
+    <ControlTemplate x:Key="RevealContentControlTemplate" TargetType="{x:Type ContentControl}">
+        <ScrollViewer x:Name="RevealContentScrollView" DockPanel.Dock="Bottom"
+                      HorizontalScrollBarVisibility="Hidden"
+                      VerticalScrollBarVisibility="Hidden"
+                      HorizontalContentAlignment="Stretch"
+                      VerticalContentAlignment="Bottom">
+            <ScrollViewer.Tag>
+                <sys:Double>0.0</sys:Double>
+            </ScrollViewer.Tag>
+            <ScrollViewer.Height>
+                <MultiBinding Converter="{StaticResource MultiplyConverter}">
+                    <Binding Path="ActualHeight" ElementName="RevealContent"/>
+                    <Binding Path="Tag" RelativeSource="{RelativeSource Self}" />
+                </MultiBinding>
+            </ScrollViewer.Height>
+            <ContentPresenter x:Name="RevealContent" ContentSource="Content"/>
+        </ScrollViewer>
+        <ControlTemplate.Triggers>
+            <Trigger Property="Visibility" Value="Visible">
+                <Trigger.EnterActions>
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <DoubleAnimation 
+                                Storyboard.TargetName="RevealContentScrollView"
+                                Storyboard.TargetProperty="Tag"
+                                To="1"
+                                Duration="0:0:1.0"/>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </Trigger.EnterActions>
+                <Trigger.ExitActions>
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <DoubleAnimation 
+                                Storyboard.TargetName="RevealContentScrollView"
+                                Storyboard.TargetProperty="Tag"
+                                To="0"
+                                Duration="0:0:1.0"/>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </Trigger.ExitActions>
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+</ResourceDictionary>

@@ -24,6 +24,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModalPopupOverlay", "ModalP
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sample WPF", "WPF Sample 3.5\Sample WPF.csproj", "{9F5F7B12-7894-44C0-BE88-113D515A536D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GridAutoFilter", "GridAutoFilter\GridAutoFilter.csproj", "{18229628-2D46-4730-BC95-5AF7E355F556}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -66,6 +68,10 @@ Global
 		{9F5F7B12-7894-44C0-BE88-113D515A536D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9F5F7B12-7894-44C0-BE88-113D515A536D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9F5F7B12-7894-44C0-BE88-113D515A536D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{18229628-2D46-4730-BC95-5AF7E355F556}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{18229628-2D46-4730-BC95-5AF7E355F556}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{18229628-2D46-4730-BC95-5AF7E355F556}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{18229628-2D46-4730-BC95-5AF7E355F556}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

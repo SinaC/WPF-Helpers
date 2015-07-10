@@ -1,0 +1,90 @@
+﻿<UserControl x:Class="Sample.Views.TestView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <!--<UserControl.Resources>
+        <ResourceDictionary Source="pack://application:,,,/CustomControls;component/RevealContentControlTemplate.xaml"/>
+    </UserControl.Resources>-->
+    <UserControl.Resources>
+        <ResourceDictionary Source="RevealContentControlTemplate.xaml"/>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <CheckBox Grid.Row="0"
+                  x:Name="MyCheckBox"
+                  Content="Click"/>
+        <ContentControl Grid.Row="1"
+                        Template="{StaticResource RevealContentControlTemplate}">
+            <ContentControl.Style>
+                <Style TargetType="{x:Type ContentControl}">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding IsChecked, ElementName=MyCheckBox}" Value="False">
+                            <Setter Property="Visibility" Value="Collapsed"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding IsChecked, ElementName=MyCheckBox}" Value="True">
+                            <Setter Property="Visibility" Value="Visible"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </ContentControl.Style>
+            <StackPanel Grid.Row="1" Background="Blue"
+                        Orientation="Vertical">
+                <TextBlock Text="1"/>
+                <TextBlock Text="2"/>
+                <TextBlock Text="3"/>
+                <TextBlock Text="4"/>
+                <TextBlock Text="5"/>
+                <TextBlock Text="6"/>
+            </StackPanel>
+            <!--<StackPanel Grid.Row="1" Background="Blue"
+                    Orientation="Vertical">
+                <StackPanel.Style>
+                    <Style TargetType="{x:Type StackPanel}">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsChecked, ElementName=MyCheckBox}" Value="False">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding IsChecked, ElementName=MyCheckBox}" Value="True">
+                                <Setter Property="Visibility" Value="Visible"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </StackPanel.Style>
+                <TextBlock Text="1"/>
+                <TextBlock Text="2"/>
+                <TextBlock Text="3"/>
+                <TextBlock Text="4"/>
+                <TextBlock Text="5"/>
+                <TextBlock Text="6"/>
+            </StackPanel>-->
+        </ContentControl>
+        <!--<StackPanel Grid.Row="1"
+                    Orientation="Vertical">
+            <StackPanel.Style>
+                <Style TargetType="{x:Type StackPanel}">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding IsChecked, ElementName=MyCheckBox}" Value="False">
+                            <Setter Property="Visibility" Value="Collapsed"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding IsChecked, ElementName=MyCheckBox}" Value="True">
+                            <Setter Property="Visibility" Value="Visible"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </StackPanel.Style>
+            <TextBlock Text="1"/>
+            <TextBlock Text="2"/>
+            <TextBlock Text="3"/>
+            <TextBlock Text="4"/>
+            <TextBlock Text="5"/>
+            <TextBlock Text="6"/>
+        </StackPanel>-->
+    </Grid>
+</UserControl>

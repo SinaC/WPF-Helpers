@@ -1,0 +1,16 @@
+﻿<!--  
+    Jarloo
+    http://www.jarloo.com
+ 
+    This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 Unported License  
+    http://creativecommons.org/licenses/by-sa/3.0/ 
+-->
+    
+<Application x:Class="GridAutoFilter.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             StartupUri="MainWindow2.xaml">
+    <Application.Resources>
+         
+    </Application.Resources>
+</Application>

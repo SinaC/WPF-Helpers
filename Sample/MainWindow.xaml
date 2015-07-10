@@ -1,13 +1,19 @@
 ﻿<Window x:Class="Sample.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:Views="clr-namespace:Sample.Views"
-        Title="MainWindow" Height="350" Width="525">
+        Title="MainWindow" Height="450" Width="525">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Views:MediatorView Grid.Row="0"/>
         <Views:CustomGridView Grid.Row="1"/>
+        <Views:TestView Grid.Row="2"/>
+        <Border Grid.Row="3" BorderBrush="Black" BorderThickness="1" Margin="5">
+            <Views:TestView2/>
+        </Border>
     </Grid>
 </Window>
