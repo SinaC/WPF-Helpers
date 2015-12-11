@@ -48,7 +48,7 @@ namespace MVVM
             if (sourceCollection == null)
                 throw new ArgumentNullException("sourceCollection");
             if (itemsPerPage <= 0)
-                throw new ArgumentOutOfRangeException("itemsPerPage", "itemsPerPage must be strictly positive");
+                throw new ArgumentOutOfRangeException("itemsPerPage", @"itemsPerPage must be strictly positive");
             _pageSize = itemsPerPage;
 
             CopyToInternal(sourceCollection);
@@ -93,6 +93,13 @@ namespace MVVM
             PageCount = 0;
             PageIndex = 0;
             OnCollectionChanged();
+        }
+
+        public void Sort(Func<T, T, int> sortFunc)
+        {
+            var comparer = new LambdaComparer<T>(sortFunc);
+            Array.Sort(_unpagedCollection, comparer);
+            Refresh();
         }
 
         // Copy source collection to internal collection and count pages
@@ -176,5 +183,20 @@ namespace MVVM
         #endregion
 
         #endregion
+    }
+
+    public class LambdaComparer<T> : IComparer<T>
+    {
+        private readonly Func<T, T, int> _compareFunction;
+
+        public LambdaComparer(Func<T, T, int> compareFunction)
+        {
+            _compareFunction = compareFunction;
+        }
+
+        public int Compare(T item1, T item2)
+        {
+            return _compareFunction(item1, item2);
+        }
     }
 }

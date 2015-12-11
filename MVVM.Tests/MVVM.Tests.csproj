@@ -53,6 +53,12 @@
     <Compile Include="PagedCollectionTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MVVM\MVVM.csproj">
+      <Project>{5ce91432-26b8-4f91-8780-551ee8bc8c63}</Project>
+      <Name>MVVM</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>
