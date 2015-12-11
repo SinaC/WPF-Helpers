@@ -26,6 +26,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sample WPF", "WPF Sample 3.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GridAutoFilter", "GridAutoFilter\GridAutoFilter.csproj", "{18229628-2D46-4730-BC95-5AF7E355F556}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MVVM.Tests", "MVVM.Tests\MVVM.Tests.csproj", "{22FADE3C-0F80-47C0-A192-CE4D87DCD126}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -72,6 +74,10 @@ Global
 		{18229628-2D46-4730-BC95-5AF7E355F556}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{18229628-2D46-4730-BC95-5AF7E355F556}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{18229628-2D46-4730-BC95-5AF7E355F556}.Release|Any CPU.Build.0 = Release|Any CPU
+		{22FADE3C-0F80-47C0-A192-CE4D87DCD126}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{22FADE3C-0F80-47C0-A192-CE4D87DCD126}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{22FADE3C-0F80-47C0-A192-CE4D87DCD126}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{22FADE3C-0F80-47C0-A192-CE4D87DCD126}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

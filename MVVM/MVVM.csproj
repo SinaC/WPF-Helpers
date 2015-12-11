@@ -44,6 +44,8 @@
     <Compile Include="IAsyncRelayCommand.cs" />
     <Compile Include="IMediator.cs" />
     <Compile Include="Mediator.cs" />
+    <Compile Include="ObservableObject.cs" />
+    <Compile Include="PagedCollection.cs" />
     <Compile Include="RelayCommand.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
