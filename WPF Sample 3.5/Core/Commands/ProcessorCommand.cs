@@ -2,7 +2,6 @@
 using System.Windows.Input;
 using SampleWPF.Core.MVVM;
 using SampleWPF.Core.Processors;
-using SampleWPF.Core.ServerCalls;
 
 namespace SampleWPF.Core.Commands
 {

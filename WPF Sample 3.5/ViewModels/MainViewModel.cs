@@ -45,7 +45,7 @@ namespace SampleWPF.ViewModels
         
         public MainViewModel()
         {
-            Title = "Portal Conseilller ENGIE - 5 build 0 - LOCAL";
+            Title = "Sample application";
             HeaderViewModel = new MainHeaderViewModel();
             MainTabControlViewModel = new MainTabControlViewModel(this);
 
@@ -96,7 +96,7 @@ namespace SampleWPF.ViewModels
     {
         public MainViewModelDesignData()
         {
-            Title = "Portal Conseilller ENGIE - 5 build 0 - LOCAL";
+            Title = "Sample application";
 
             HeaderViewModel = new MainHeaderViewModelDesignData();
             MainTabControlViewModel = new MainTabControlViewModelDesignData();

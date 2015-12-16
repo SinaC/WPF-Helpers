@@ -8,6 +8,6 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
-        <TextBlock FontSize="20" Text="ENGIE"/>
+        <TextBlock FontSize="20" Text="APPLICATION"/>
     </Grid>
 </UserControl>
